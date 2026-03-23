@@ -33,7 +33,7 @@ export default {
       fontFamily: {
         display: ["DM Serif Display", "serif"],
         name: ["Cormorant Garamond", "serif"],
-        sans: ["DM Sans", "sans-serif"],
+        sans: ["NTR", "DM Sans", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
       },
       boxShadow: {
