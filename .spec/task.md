@@ -8,7 +8,7 @@
 - [x] Configure Tailwind CSS v3 with CSS Variable token system
 - [x] Implement `ThemeContext` and `ThemeProvider` for dark/light mode
 - [x] Build `ThemeToggle` (Animated sun/moon)
-- [ ] Build `Navbar` (Fixed top, backdrop blur on scroll, SVG logo draw-on)
+- [x] Build `Navbar` (Fixed top, backdrop blur on scroll, SVG logo draw-on)
 - [ ] Setup smooth scroll behavior for anchor links
 
 ## 2. Core UI Component Library

@@ -1,11 +1,13 @@
 import { useTheme } from './hooks/useTheme';
+import { Navbar } from './components/layout/Navbar';
 import { ThemeToggle } from './components/ui/ThemeToggle';
 
 function App() {
   const { theme } = useTheme();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4">
+    <div className="min-h-[200vh] flex flex-col items-center p-4 pt-40">
+      <Navbar />
       <h1 className="text-5xl md:text-8xl font-display mb-8">
         Lightning's Portfolio
       </h1>
