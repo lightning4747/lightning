@@ -9,7 +9,7 @@
 - [x] Implement `ThemeContext` and `ThemeProvider` for dark/light mode
 - [x] Build `ThemeToggle` (Animated sun/moon)
 - [x] Build `Navbar` (Fixed top, backdrop blur on scroll, SVG logo draw-on)
-- [ ] Setup smooth scroll behavior for anchor links
+- [x] Setup smooth scroll behavior for anchor links
 
 ## 2. Core UI Component Library
 - [ ] `BorderGlowCard`: Container with animated rotating glow border

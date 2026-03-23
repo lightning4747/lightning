@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, useScroll, AnimatePresence } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 import { Zap } from 'lucide-react';
 import { ThemeToggle } from '../ui/ThemeToggle';
 
