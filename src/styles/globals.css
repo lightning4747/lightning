@@ -1,0 +1,30 @@
+@import './tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 ease-in-out font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display text-[var(--text-primary)];
+  }
+
+  /* Custom selection color */
+  ::selection {
+    @apply bg-[var(--accent-primary)] text-white;
+  }
+}
+
+@layer utilities {
+  .glass-effect {
+    @apply backdrop-blur-[12px] bg-[var(--bg-primary)] bg-opacity-70 border-b border-[var(--border)];
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-blue)];
+  }
+}

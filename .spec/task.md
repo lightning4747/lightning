@@ -4,8 +4,8 @@
 > Progress Legend: `[ ]` Yet to Create | `[#]` On Hold | `[x]` Done
 
 ## 1. Foundation
-- [ ] Initialize Vite + React 18 + TypeScript scaffold
-- [ ] Configure Tailwind CSS v3 with CSS Variable token system
+- [x] Initialize Vite + React 18 + TypeScript scaffold
+- [x] Configure Tailwind CSS v3 with CSS Variable token system
 - [ ] Implement `ThemeContext` and `ThemeProvider` for dark/light mode
 - [ ] Build `ThemeToggle` (Animated sun/moon)
 - [ ] Build `Navbar` (Fixed top, backdrop blur on scroll, SVG logo draw-on)

@@ -1,0 +1,47 @@
+:root {
+  --bg-primary:     #F8F7F4;   /* warm off-white */
+  --bg-secondary:   #F0EDE8;   /* cream card surface */
+  --bg-tertiary:    #E8E4DE;   /* subtle section dividers */
+
+  --text-primary:   #1A1A1A;
+  --text-secondary: #5C5C5C;
+  --text-muted:     #9A9A9A;
+
+  /* Google Material-inspired soft accents */
+  --accent-red:     #E8645A;   /* soft coral — Contact section */
+  --accent-yellow:  #F5C842;   /* warm yellow — Projects section */
+  --accent-blue:    #5B9CF6;   /* calm sky — Hero/default interactive */
+  --accent-green:   #5DBE89;   /* soft mint — Skills section */
+
+  --accent-primary: var(--accent-blue);
+
+  --glow-color:     rgba(91, 156, 246, 0.35);
+  --border:         rgba(0, 0, 0, 0.08);
+  --shadow:         0 4px 24px rgba(0,0,0,0.08);
+  --particle-color: #5B9CF6;
+}
+
+[data-theme="dark"] {
+  --bg-primary:     #141414;   /* near-black, warm tint */
+  --bg-secondary:   #1C1C1C;   /* elevated surfaces */
+  --bg-tertiary:    #242424;   /* cards */
+
+  --text-primary:   #E8E6E0;   /* warm off-white */
+  --text-secondary: #888880;   /* muted body */
+  --text-muted:     #555550;
+
+  /* Single accent family — muted teal is the only real color */
+  --accent-primary: #4ECDC4;
+  --accent-dim:     #2A7A75;   /* for glows / dimmed states */
+
+  /* Rarely used — tags/badges only */
+  --accent-red:     #C0544A;
+  --accent-yellow:  #B8913A;
+  --accent-blue:    #3D7ABF;
+  --accent-green:   #3D8F68;
+
+  --glow-color:     rgba(78, 205, 196, 0.2);
+  --border:         rgba(255, 255, 255, 0.06);
+  --shadow:         0 4px 32px rgba(0,0,0,0.4);
+  --particle-color: #4ECDC4;
+}
