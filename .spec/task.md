@@ -6,7 +6,7 @@
 ## 1. Foundation
 - [x] Initialize Vite + React 18 + TypeScript scaffold
 - [x] Configure Tailwind CSS v3 with CSS Variable token system
-- [ ] Implement `ThemeContext` and `ThemeProvider` for dark/light mode
+- [x] Implement `ThemeContext` and `ThemeProvider` for dark/light mode
 - [ ] Build `ThemeToggle` (Animated sun/moon)
 - [ ] Build `Navbar` (Fixed top, backdrop blur on scroll, SVG logo draw-on)
 - [ ] Setup smooth scroll behavior for anchor links
