@@ -1,13 +1,18 @@
 import { FadeSection } from '../ui/FadeSection';
-import { ThreeDShapes } from '../ui/ThreeDShapes';
 import { DataTerrain } from '../ui/DataTerrain';
+import { ParallaxField } from '../ui/ParallaxField';
+import { BlueprintGrid } from '../ui/BlueprintGrid';
 import { motion } from 'framer-motion';
 
 export const Hero = () => {
   return (
     <section id="hero" className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-bg-primary pt-20">
       {/* Background Layers */}
+      <BlueprintGrid />
       <DataTerrain />
+      
+      {/* 3D Floating Field - High Z-index for interactivity */}
+      <ParallaxField />
 
       {/* Centered Content Layer - Static */}
       <div className="max-w-4xl mx-auto px-6 z-10 w-full text-center flex flex-col items-center relative">
