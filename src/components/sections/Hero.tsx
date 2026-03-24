@@ -1,12 +1,13 @@
 import { FadeSection } from '../ui/FadeSection';
 import { ThreeDShapes } from '../ui/ThreeDShapes';
+import { DataTerrain } from '../ui/DataTerrain';
 import { motion } from 'framer-motion';
 
 export const Hero = () => {
   return (
     <section id="hero" className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-bg-primary pt-20">
-      {/* Background 3D Elements - Following Camera */}
-      <ThreeDShapes />
+      {/* Background Layers */}
+      <DataTerrain />
 
       {/* Centered Content Layer - Static */}
       <div className="max-w-4xl mx-auto px-6 z-10 w-full text-center flex flex-col items-center relative">
