@@ -12,7 +12,7 @@
 - [x] Setup smooth scroll behavior for anchor links
 
 ## 2. Core UI Component Library
-- [ ] `BorderGlowCard`: Container with animated rotating glow border
+- [x] `BorderGlowCard`: Container with animated rotating glow border
 - [ ] `FadeSection`: Framer Motion intersection observer wrapper
 - [ ] `ParallaxLayer`: Scroll-linked transform component
 - [ ] `AuraBackground`: Drifting radial gradient blobs (context-aware)
