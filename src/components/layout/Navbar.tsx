@@ -71,7 +71,7 @@ export const Navbar = () => {
                   y: isHovered ? -4 : (isNeighbor ? -2 : 0),
                   scale: isHovered ? 1.1 : (isNeighbor ? 1.05 : 1),
                   color: isHovered ? link.color : 'var(--text-secondary)',
-                  fontWeight: isHovered ? 700 : 400,
+                  fontWeight: isHovered ? 800 : 600,
                 }}
                 transition={{ 
                   type: 'spring', 
@@ -79,7 +79,7 @@ export const Navbar = () => {
                   damping: 35,
                   mass: 0.5
                 }}
-                className="relative flex flex-col items-center font-sans text-xs tracking-[0.2em] uppercase transition-colors duration-150"
+                className="relative flex flex-col items-center font-sans text-sm tracking-[0.15em] uppercase transition-colors duration-150"
               >
                 {link.name}
                 
