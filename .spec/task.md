@@ -13,7 +13,7 @@
 
 ## 2. Core UI Component Library
 - [x] `BorderGlowCard`: Container with animated rotating glow border
-- [ ] `FadeSection`: Framer Motion intersection observer wrapper
+- [X] `FadeSection`: Framer Motion intersection observer wrapper
 - [ ] `ParallaxLayer`: Scroll-linked transform component
 - [ ] `AuraBackground`: Drifting radial gradient blobs (context-aware)
 - [ ] `ClickSpark`: Global canvas-based click burst effect
