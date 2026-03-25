@@ -10,6 +10,7 @@ import { GamesPage } from './pages/GamesPage';
 import { BooksPage } from './pages/BooksPage';
 
 import { About } from './components/sections/About';
+import { Skills } from './components/sections/Skills';
 
 function MainPage() {
   const { theme } = useTheme();
@@ -30,51 +31,8 @@ function MainPage() {
       {/* About Section */}
       <About />
 
-      {/* Decorative Divider with BorderGlow context cards */}
-      <div className="mx-auto mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full px-6">
-        <FadeSection direction="up" delay={0.2}>
-          <BorderGlow
-            edgeSensitivity={30}
-            glowColor="40 80 80"
-            backgroundColor='#1A1A1A'
-            borderRadius={28}
-            glowRadius={30}
-            glowIntensity={1}
-            coneSpread={25}
-            animated={false}
-            colors={['#c084fc', '#f472b6', '#38bdf8']}
-          >
-            <div className="p-8 h-full bg-bg-secondary/50 backdrop-blur-sm rounded-[23px]">
-              <h3 className="font-display text-2xl mb-3 text-accent-blue font-bold uppercase tracking-tight">Theme Context</h3>
-              <p className="text-text-secondary leading-relaxed uppercase font-mono tracking-widest text-xs">Connected successfully. Current theme: <span className="font-mono text-accent-primary uppercase font-bold">{theme}</span></p>
-            </div>
-          </BorderGlow>
-        </FadeSection>
-
-        <FadeSection delay={0.4} direction="up">
-          <BorderGlow
-            edgeSensitivity={30}
-            glowColor="40 80 80"
-            backgroundColor='#1A1A1A'
-            borderRadius={28}
-            glowRadius={30}
-            glowIntensity={1}
-            coneSpread={25}
-            animated={false}
-            colors={['#c084fc', '#f472b6', '#38bdf8']}
-          >
-            <div className="p-8 h-full bg-bg-secondary/50 backdrop-blur-sm rounded-[23px]">
-              <h3 className="font-display text-2xl mb-3 text-accent-green font-bold uppercase tracking-tight">Particle Tech</h3>
-              <p className="text-text-secondary leading-relaxed uppercase font-mono tracking-widest text-xs">React Three Fiber + Shaders powering the visual experience.</p>
-            </div>
-          </BorderGlow>
-        </FadeSection>
-      </div>
-
-      {/* Experience, Skills, Projects, Contact Section Placeholders */}
-      <section id="skills" className="min-h-screen border-t border-border flex items-center justify-center">
-        <FadeSection direction="left"><h2 className="text-4xl font-display uppercase tracking-widest">Skills</h2></FadeSection>
-      </section>
+      {/* Skills Section */}
+      <Skills />
       <section id="experience" className="min-h-screen border-t border-border flex items-center justify-center">
         <FadeSection direction="right"><h2 className="text-4xl font-display uppercase tracking-widest">Experience</h2></FadeSection>
       </section>
