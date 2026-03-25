@@ -160,17 +160,20 @@ export const About: React.FC = () => {
           <div className={`about-description space-y-4 p-2 transition-all duration-500 
             ${isDarkMode ? "text-slate-400" : "text-slate-700"}`}>
             
-            <p className="text-lg leading-relaxed">
-              I am currently a <b>Software Engineer Intern</b> at 
-              <a href="https://eanstall.com" target="_blank" rel="noopener noreferrer" className={`mx-1 font-bold ${isDarkMode ? "text-accent-primary hover:text-white" : "text-blue-600 hover:text-blue-800"}`}> EANS Technologies</a>, 
-              where I help build backend architectures that scale. Previously, I've worked on managing platforms with 
-              <b> 400k+ images</b> and optimized high-performance services. At the same time, I am pursuing my 
-              <b> B.Tech</b> in <b>Computer Science</b> at <b>MCET</b>.
-            </p>
+<p className="text-lg leading-relaxed">
+  I am a student at <b>MCET</b> pursuing my <b>B.Tech in Artificial Intelligence & Data Science</b>. 
+  Currently, I'm a <b>Software Engineer Intern</b> at 
+  <a href="https://eanstall.com" target="_blank" rel="noopener noreferrer" 
+     className={`mx-1 font-bold ${isDarkMode ? "text-accent-primary hover:text-white" : "text-blue-600 hover:text-blue-800"}`}> 
+     EANS Technologies
+  </a>, 
+  where I architect scalable backend systems and optimize high-performance cloud infrastructure.
+</p>
 
             <p className="text-lg leading-relaxed">
-              Outside of work, I’m nerdy about tech gadgets, research <b>Graph Neural Networks</b> for fraud detection, 
-              and play way too many souls games. Oh, and I enjoy crafting immersive digital experiences.
+              When I’m not deep in a terminal, I’m usually exploring <b>Machine Learning</b>—diving into different concepts, 
+              techniques, and building models across various domains. Outside of code, 
+              I’m into physics and play way too many Souls games.
             </p>
 
             <div className="pt-4">
