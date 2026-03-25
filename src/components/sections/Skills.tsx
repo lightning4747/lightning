@@ -111,9 +111,8 @@ export const Skills: React.FC = () => {
   const isDarkRef = useRef(isDarkMode);
   const trianglesRef = useRef<Triangle[]>([]);
   
-  // Refs for smooth interpolated hover effects
   const hoveredRef = useRef<number | null>(null);
-  const hoverStates = useRef<number[]>(new Array(SKILLS.length).fill(0)); // 0 to 1 lerp
+  const hoverStates = useRef<number[]>(new Array(SKILLS.length).fill(0));
 
   useEffect(() => { isDarkRef.current = isDarkMode; }, [isDarkMode]);
   useEffect(() => { trianglesRef.current = buildGeodesicTriangles(2, GLOBE_RADIUS); }, []);
@@ -146,7 +145,7 @@ export const Skills: React.FC = () => {
       const lLen = Math.sqrt(lightX**2 + lightY**2 + lightZ**2);
       const dot = (nx/nLen)*(lightX/lLen) + (ny/nLen)*(lightY/lLen) + (nz/nLen)*(lightZ/lLen);
 
-      const depth = (avgZ + GLOBE_RADIUS) / (GLOBE_RADIUS * 2);
+      const depth = (pd_scale(raz, rbz, rcz) + GLOBE_RADIUS) / (GLOBE_RADIUS * 2);
       if (avgZ < -GLOBE_RADIUS * 0.75) continue;
 
       const pa = project3D(rax, ray, raz, cx, cy, GLOBE_FOV);
@@ -164,6 +163,8 @@ export const Skills: React.FC = () => {
       ctx.strokeStyle = dark ? `rgba(78, 205, 196, ${Math.min(egAl, 0.8).toFixed(3)})` : `rgba(59, 130, 246, ${Math.min(egAl, 0.75).toFixed(3)})`;
       ctx.lineWidth = 0.7; ctx.stroke();
     }
+
+    function pd_scale(za: number, zb: number, zc: number) { return (za + zb + zc) / 3; }
 
     const STEPS = 80;
     ctx.beginPath();
@@ -187,43 +188,30 @@ export const Skills: React.FC = () => {
 
     tags.forEach((tag, i) => {
       const pd = projected[i]; if (!pd) return;
-      
-      // LERP hover state
       const target = (hoveredRef.current === i) ? 1 : 0;
       hoverStates.current[i] += (target - hoverStates.current[i]) * 0.15;
       const h = hoverStates.current[i];
 
-      const depth = (pd.scale * (GLOBE_FOV + SKILL_RADIUS) - GLOBE_FOV + SKILL_RADIUS) / (SKILL_RADIUS * 2);
-      
-      // Calculate front-facing normalized depth (1.0 = center front, 0.0 = edge/back)
       const frontDepth = Math.max(0, (pd.scale - (GLOBE_FOV / (GLOBE_FOV + SKILL_RADIUS))) / (1 - (GLOBE_FOV / (GLOBE_FOV + SKILL_RADIUS))));
-      
-      // Narrower visibility window: Start fading much earlier as they move toward the sides
-      const visibleThreshold = 0.45; // 0 to 1 range (0 = side, 1 = front center)
+      const visibleThreshold = 0.45;
       const adjustedDepth = Math.max(0, (frontDepth - visibleThreshold) / (1 - visibleThreshold));
       
+      const depth = (pd.scale * (GLOBE_FOV + SKILL_RADIUS) - GLOBE_FOV + SKILL_RADIUS) / (SKILL_RADIUS * 2);
       const baseScale = 0.5 + depth * 0.5;
       const currentScale = baseScale * (1 + h * 0.3);
-
-      // Fade out rapidly as it moves from the center
       const currentOpacity = (adjustedDepth ** 1.8) * (1 - h) + h;
 
       tag.style.left = `${pd.sx}px`; tag.style.top = `${pd.sy}px`;
       tag.style.transform = `translate(-50%, -50%) scale(${currentScale.toFixed(3)}) rotate(${(h * -5).toFixed(1)}deg)`;
       tag.style.opacity = currentOpacity.toFixed(3);
       tag.style.zIndex = (Math.round((pd.scale-1)*1000 + 1000) + (h > 0.1 ? 5000 : 0)).toString();
-      
-      // Disable interaction for anything outside the front sweet spot
       tag.style.pointerEvents = adjustedDepth > 0.1 ? "auto" : "none";
       tag.style.visibility = adjustedDepth > 0.01 ? "visible" : "hidden";
 
-      // Apply inner styles for ultra-smoothness
       const icon = tag.querySelector("i");
       const span = tag.querySelector("span");
       if (icon) {
-         icon.style.filter = h > 0.01 
-           ? `drop-shadow(0 0 ${h*20}px ${dark ? "rgba(78,205,196,0.8)" : "rgba(59,130,246,0.6)"})` 
-           : "none";
+         icon.style.filter = h > 0.01 ? `drop-shadow(0 0 ${h*20}px ${dark ? "rgba(78,205,196,0.8)" : "rgba(59,130,246,0.6)"})` : "none";
          icon.style.filter += h > 0.01 ? ` brightness(${1 + h*0.2})` : "";
       }
       if (span) {
@@ -234,10 +222,18 @@ export const Skills: React.FC = () => {
     });
 
     if (!dragRef.current) {
+      // momentum logic
       const targetVelX = hoveredRef.current !== null ? baseVelRef.current.x * 0.05 : baseVelRef.current.x;
       const targetVelY = hoveredRef.current !== null ? baseVelRef.current.y * 0.05 : baseVelRef.current.y;
+      
+      // friction
+      velRef.current.x *= 0.95;
+      velRef.current.y *= 0.95;
+
+      // blend with target base rotation
       velRef.current.x += (targetVelX - velRef.current.x) * 0.05;
       velRef.current.y += (targetVelY - velRef.current.y) * 0.05;
+      
       rotRef.current.x += velRef.current.x;
       rotRef.current.y += velRef.current.y;
     }
@@ -253,28 +249,32 @@ export const Skills: React.FC = () => {
   const onMouseMove = (e: React.MouseEvent) => {
     if (!dragRef.current) return;
     const dx = e.clientX - lastPosRef.current.x; const dy = e.clientY - lastPosRef.current.y;
-    rotRef.current.y += dx * 0.008; rotRef.current.x += dy * 0.008;
+    // apply force immediately
+    velRef.current.y = dx * 0.008;
+    velRef.current.x = -dy * 0.008; // X rotation uses Y delta
+    rotRef.current.y += dx * 0.008; 
+    rotRef.current.x += dy * 0.008;
     lastPosRef.current = { x: e.clientX, y: e.clientY };
   };
 
   return (
     <section id="skills" className="py-24 px-6 md:px-10 max-w-6xl mx-auto min-h-[90vh] flex flex-col justify-center">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
-      <FadeSection direction="down" delay={0.2}>
-        <div className="section-header mb-2 relative inline-block group/title">
-           <span className={`text-2xl font-mono tracking-tighter ${isDarkMode ? "text-accent-primary" : "text-blue-500"}`}>/ skills.json</span>
-           <div className={`absolute -bottom-1 left-0 w-0 h-[1px] transition-all duration-500 group-hover/title:w-full ${isDarkMode ? "bg-accent-primary" : "bg-blue-500"}`} />
+      <FadeSection direction="down" delay={0.2} className="w-full text-left">
+        <div className="section-header mb-12">
+          <span className={`text-2xl font-mono tracking-tighter ${isDarkMode ? "text-accent-primary" : "text-blue-500"}`}>
+            / Skills
+          </span>
         </div>
-        <p className={`font-mono text-xs mb-10 ${isDarkMode ? "text-slate-600" : "text-slate-400"}`}>// Orbital Inspection System: Active ↻</p>
       </FadeSection>
 
       <div className="flex items-center justify-center flex-1">
-        <div className="relative cursor-grab active:cursor-grabbing select-none" style={{ width: GLOBE_SIZE, height: GLOBE_SIZE }} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={() => dragRef.current = false} onMouseLeave={() => dragRef.current = false} onTouchStart={(e) => { dragRef.current = true; lastPosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; }} onTouchMove={(e) => { if (dragRef.current) { const dx = e.touches[0].clientX - lastPosRef.current.x; const dy = e.touches[0].clientY - lastPosRef.current.y; rotRef.current.y += dx * 0.008; rotRef.current.x += dy * 0.008; lastPosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; } }} onTouchEnd={() => dragRef.current = false}>
+        <div className="relative cursor-grab active:cursor-grabbing select-none" style={{ width: GLOBE_SIZE, height: GLOBE_SIZE }} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={() => dragRef.current = false} onMouseLeave={() => dragRef.current = false} onTouchStart={(e) => { dragRef.current = true; lastPosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; }} onTouchMove={(e) => { if (dragRef.current) { const dx = e.touches[0].clientX - lastPosRef.current.x; const dy = e.touches[0].clientY - lastPosRef.current.y; velRef.current.y = dx * 0.008; velRef.current.x = -dy * 0.008; rotRef.current.y += dx * 0.008; rotRef.current.x += dy * 0.008; lastPosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; } }} onTouchEnd={() => dragRef.current = false}>
           <canvas ref={canvasRef} width={GLOBE_SIZE} height={GLOBE_SIZE} className="absolute inset-0" style={{ pointerEvents: "none", opacity: isDarkMode ? 0.7 : 0.9 }} />
           <div ref={overlayRef} className="absolute inset-0" style={{ pointerEvents: "none" }}>
             {SKILLS.map((skill, i) => (
               <div key={i} className="skill-tag absolute flex flex-col items-center gap-0.5"
-                   style={{ pointerEvents: "auto", transition: "none" /* Handled by draw loop */ }}
+                   style={{ pointerEvents: "auto", transition: "none" }}
                    onMouseEnter={() => { hoveredRef.current = i; }}
                    onMouseLeave={() => { hoveredRef.current = null; }}>
                 <i className={`${skill.icon} text-3xl`} />
