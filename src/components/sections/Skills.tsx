@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useRef, useCallback, useState } from "react";
+import { motion } from "framer-motion";
 import { useTheme } from "../../hooks/useTheme";
 import { FadeSection } from "../ui/FadeSection";
+import BorderGlow from "../ui/BorderGlow";
 
 interface Skill {
   name: string;
@@ -8,27 +10,29 @@ interface Skill {
 }
 
 const SKILLS: Skill[] = [
-  { name: "React",       icon: "devicon-react-original colored" },
-  { name: "TypeScript",  icon: "devicon-typescript-plain colored" },
-  { name: "JavaScript",  icon: "devicon-javascript-plain colored" },
-  { name: "Node.js",     icon: "devicon-nodejs-plain colored" },
-  { name: "Python",      icon: "devicon-python-plain colored" },
-  { name: "Java",        icon: "devicon-java-plain colored" },
-  { name: "PostgreSQL",  icon: "devicon-postgresql-plain colored" },
-  { name: "MongoDB",     icon: "devicon-mongodb-plain colored" },
-  { name: "Docker",      icon: "devicon-docker-plain colored" },
-  { name: "Git",         icon: "devicon-git-plain colored" },
-  { name: "AWS",         icon: "devicon-amazonwebservices-plain-wordmark colored" },
-  { name: "Linux",       icon: "devicon-linux-plain colored" },
-  { name: "Express",     icon: "devicon-express-original" },
-  { name: "Redis",       icon: "devicon-redis-plain colored" },
-  { name: "Tailwind",    icon: "devicon-tailwindcss-original colored" },
-  { name: "Three.js",    icon: "devicon-threejs-original colored" },
-  { name: "HTML5",       icon: "devicon-html5-plain colored" },
-  { name: "CSS3",        icon: "devicon-css3-plain colored" },
-  { name: "MySQL",       icon: "devicon-mysql-plain colored" },
-  { name: "GraphQL",     icon: "devicon-graphql-plain colored" },
+  { name: "React", icon: "devicon-react-original colored" },
+  { name: "TypeScript", icon: "devicon-typescript-plain colored" },
+  { name: "JavaScript", icon: "devicon-javascript-plain colored" },
+  { name: "Node.js", icon: "devicon-nodejs-plain colored" },
+  { name: "Python", icon: "devicon-python-plain colored" },
+  { name: "Java", icon: "devicon-java-plain colored" },
+  { name: "PostgreSQL", icon: "devicon-postgresql-plain colored" },
+  { name: "MongoDB", icon: "devicon-mongodb-plain colored" },
+  { name: "Docker", icon: "devicon-docker-plain colored" },
+  { name: "Git", icon: "devicon-git-plain colored" },
+  { name: "AWS", icon: "devicon-amazonwebservices-plain-wordmark colored" },
+  { name: "Linux", icon: "devicon-linux-plain colored" },
+  { name: "Express", icon: "devicon-express-original" },
+  { name: "Redis", icon: "devicon-redis-plain colored" },
+  { name: "Tailwind", icon: "devicon-tailwindcss-original colored" },
+  { name: "Three.js", icon: "devicon-threejs-original colored" },
+  { name: "HTML5", icon: "devicon-html5-plain colored" },
+  { name: "CSS3", icon: "devicon-css3-plain colored" },
+  { name: "MySQL", icon: "devicon-mysql-plain colored" },
+  { name: "GraphQL", icon: "devicon-graphql-plain colored" },
 ];
+
+const LIGHT_PALETTE = ['#E8645A', '#F5C842', '#5B9CF6', '#5DBE89'];
 
 const GLOBE_RADIUS = 240;
 const SKILL_RADIUS = GLOBE_RADIUS * 1.15;
@@ -71,8 +75,8 @@ function midpoint(a: Vec3, b: Vec3): Vec3 {
 
 function buildGeodesicTriangles(subdivisions: number, radius: number): Triangle[] {
   const t = (1 + Math.sqrt(5)) / 2;
-  const baseVerts: Vec3[] = [[-1,t,0],[1,t,0],[-1,-t,0],[1,-t,0],[0,-1,t],[0,1,t],[0,-1,-t],[0,1,-t],[t,0,-1],[t,0,1],[-t,0,-1],[-t,0,1]].map(normalize) as Vec3[];
-  let faces: [number, number, number][] = [[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],[3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]];
+  const baseVerts: Vec3[] = [[-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0], [0, -1, t], [0, 1, t], [0, -1, -t], [0, 1, -t], [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1]].map(normalize) as Vec3[];
+  let faces: [number, number, number][] = [[0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11], [1, 5, 9], [5, 11, 4], [11, 10, 2], [10, 7, 6], [7, 1, 8], [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9], [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1]];
   let verts = [...baseVerts];
   for (let s = 0; s < subdivisions; s++) {
     const midCache = new Map<string, number>();
@@ -96,6 +100,143 @@ function buildGeodesicTriangles(subdivisions: number, radius: number): Triangle[
   return faces.map(([a, b, c]) => [scaled[a], scaled[b], scaled[c]]);
 }
 
+const BentoCard = ({ children, className, isDarkMode, id, delay = 0 }: any) => {
+  const [rotation, setRotation] = useState(0);
+
+  useEffect(() => {
+    if (isDarkMode) return;
+    const interval = setInterval(() => {
+      setRotation(prev => (prev + 1.5) % 360);
+    }, 20);
+    return () => clearInterval(interval);
+  }, [isDarkMode]);
+
+  const conicGradient = `conic-gradient(from ${rotation}deg, ${LIGHT_PALETTE[0]}, ${LIGHT_PALETTE[1]}, ${LIGHT_PALETTE[2]}, ${LIGHT_PALETTE[3]}, ${LIGHT_PALETTE[0]})`;
+
+  // Content Wrapper with Noise and Decorative elements
+  const CardContent = () => (
+    <div className="p-10 h-full flex flex-col justify-center relative overflow-hidden h-full">
+      {/* Industrial Texture / Grain Overlay */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] mix-blend-overlay grayscale invert">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <filter id={`noiseFilter-${id}`}>
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+          </filter>
+          <rect width="100%" height="100%" filter={`url(#noiseFilter-${id})`} />
+        </svg>
+      </div>
+
+      <div className="relative z-10 transition-transform duration-500 group-hover:translate-x-1">
+        {children}
+      </div>
+
+      {/* Decorative "Human" Detail Elements */}
+      <div className={`absolute top-6 right-8 font-mono text-[9px] tracking-[0.4em] uppercase opacity-20 pointer-events-none select-none
+        ${isDarkMode ? "text-accent-primary" : "text-slate-400"}`}>
+        SYS-OP / {id?.toUpperCase()}-SEC
+      </div>
+      
+      <div className={`absolute bottom-6 left-10 w-8 h-[1px] opacity-30
+        ${isDarkMode ? "bg-accent-primary" : "bg-slate-400"}`} 
+      />
+    </div>
+  );
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95, y: 30 }}
+      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ 
+        duration: 0.8, 
+        delay, 
+        ease: [0.16, 1, 0.3, 1] 
+      }}
+      viewport={{ once: true }}
+      className={`${className} relative group h-full transition-transform duration-500`}
+    >
+      {isDarkMode ? (
+        // DARK MODE: Restore to simple original card using BorderGlow
+        <BorderGlow
+          borderRadius={40}
+          glowColor="180 80 80"
+          backgroundColor="#13141a"
+          glowRadius={60}
+          glowIntensity={0.6}
+          edgeSensitivity={40}
+          className="h-full cursor-default"
+        >
+          <CardContent />
+        </BorderGlow>
+      ) : (
+        // LIGHT MODE: Gradient border appears strictly BEHIND on hover
+        <div className="relative h-full w-full rounded-[40px] overflow-visible">
+          {/* Conic Gradient Border/Shape strictly BEHIND card (revealed on hover) */}
+          <div 
+            className="absolute -inset-[3px] rounded-[43px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10 pointer-events-none"
+            style={{
+              background: conicGradient,
+            }}
+          />
+
+          {/* Glowing Shadow BEHIND card */}
+          <div className="absolute inset-2 -z-20 blur-2xl opacity-0 group-hover:opacity-40 group-hover:scale-110 transition-all duration-700"
+            style={{ background: conicGradient, borderRadius: '40px' }}
+          />
+
+          {/* Clean Light Interior */}
+          <div className="h-full w-full rounded-[40px] bg-white border border-slate-100 shadow-xl shadow-slate-200/50 relative overflow-hidden">
+            <CardContent />
+          </div>
+        </div>
+      )}
+    </motion.div>
+  );
+};
+
+const SkillWord = ({ word, isDarkMode }: { word: string, isDarkMode: boolean }) => {
+  const [hoverColor, setHoverColor] = useState<string | null>(null);
+  const colors = isDarkMode 
+    ? ["#4ecdc4", "#3b82f6", "#0ea5e9", "#4ecdc4"]
+    : LIGHT_PALETTE; 
+
+  const handleMouseEnter = () => {
+    setRotationGlobal(); // Trigger a slight rotation nudge maybe
+    setHoverColor(colors[Math.floor(Math.random() * colors.length)]);
+  };
+
+  const setRotationGlobal = () => {};
+
+  return (
+    <span 
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={() => setHoverColor(null)}
+      className={`font-bold transition-all duration-300 hover:scale-110 inline-block cursor-crosshair
+        ${isDarkMode ? "text-slate-100" : "text-slate-900"}`}
+      style={{ color: hoverColor || undefined }}
+    >
+      {word}
+    </span>
+  );
+};
+
+const HighlightedText = ({ category, tech, isDarkMode }: any) => (
+  <div className="max-w-md select-none">
+    <span className={`text-[10px] font-mono font-bold uppercase tracking-[0.4em] mb-4 block
+      ${isDarkMode ? "text-accent-primary/80" : "text-slate-500/80"}`}>
+      {category}
+    </span>
+    <p className={`text-base sm:text-2xl font-display tracking-tighter leading-tight transition-colors duration-300
+      ${isDarkMode ? "text-slate-400" : "text-slate-600"}`}>
+      {tech.split(', ').map((word: string, i: number, arr: any) => (
+        <React.Fragment key={word}>
+          <SkillWord word={word} isDarkMode={isDarkMode} />
+          {i < arr.length - 1 && <span className="opacity-20 mx-2 font-light">/</span>}
+        </React.Fragment>
+      ))}
+    </p>
+  </div>
+);
+
 export const Skills: React.FC = () => {
   const { theme } = useTheme();
   const isDarkMode = theme === "dark";
@@ -110,7 +251,7 @@ export const Skills: React.FC = () => {
   const lastPosRef = useRef({ x: 0, y: 0 });
   const isDarkRef = useRef(isDarkMode);
   const trianglesRef = useRef<Triangle[]>([]);
-  
+
   const hoveredRef = useRef<number | null>(null);
   const hoverStates = useRef<number[]>(new Array(SKILLS.length).fill(0));
 
@@ -142,8 +283,8 @@ export const Skills: React.FC = () => {
       const nx = aby * acz - abz * acy, ny = abz * acx - abx * acz, nz = abx * acy - aby * acx;
       const nLen = Math.sqrt(nx * nx + ny * ny + nz * nz) || 1;
       const lightX = 0.4, lightY = -0.6, lightZ = 1.0;
-      const lLen = Math.sqrt(lightX**2 + lightY**2 + lightZ**2);
-      const dot = (nx/nLen)*(lightX/lLen) + (ny/nLen)*(lightY/lLen) + (nz/nLen)*(lightZ/lLen);
+      const lLen = Math.sqrt(lightX ** 2 + lightY ** 2 + lightZ ** 2);
+      const dot = (nx / nLen) * (lightX / lLen) + (ny / nLen) * (lightY / lLen) + (nz / nLen) * (lightZ / lLen);
 
       const depth = (pd_scale(raz, rbz, rcz) + GLOBE_RADIUS) / (GLOBE_RADIUS * 2);
       if (avgZ < -GLOBE_RADIUS * 0.75) continue;
@@ -195,7 +336,7 @@ export const Skills: React.FC = () => {
       const frontDepth = Math.max(0, (pd.scale - (GLOBE_FOV / (GLOBE_FOV + SKILL_RADIUS))) / (1 - (GLOBE_FOV / (GLOBE_FOV + SKILL_RADIUS))));
       const visibleThreshold = 0.45;
       const adjustedDepth = Math.max(0, (frontDepth - visibleThreshold) / (1 - visibleThreshold));
-      
+
       const depth = (pd.scale * (GLOBE_FOV + SKILL_RADIUS) - GLOBE_FOV + SKILL_RADIUS) / (SKILL_RADIUS * 2);
       const baseScale = 0.5 + depth * 0.5;
       const currentScale = baseScale * (1 + h * 0.3);
@@ -204,20 +345,20 @@ export const Skills: React.FC = () => {
       tag.style.left = `${pd.sx}px`; tag.style.top = `${pd.sy}px`;
       tag.style.transform = `translate(-50%, -50%) scale(${currentScale.toFixed(3)}) rotate(${(h * -5).toFixed(1)}deg)`;
       tag.style.opacity = currentOpacity.toFixed(3);
-      tag.style.zIndex = (Math.round((pd.scale-1)*1000 + 1000) + (h > 0.1 ? 5000 : 0)).toString();
+      tag.style.zIndex = (Math.round((pd.scale - 1) * 1000 + 1000) + (h > 0.1 ? 5000 : 0)).toString();
       tag.style.pointerEvents = adjustedDepth > 0.1 ? "auto" : "none";
       tag.style.visibility = adjustedDepth > 0.01 ? "visible" : "hidden";
 
       const icon = tag.querySelector("i");
       const span = tag.querySelector("span");
       if (icon) {
-         icon.style.filter = h > 0.01 ? `drop-shadow(0 0 ${h*20}px ${dark ? "rgba(78,205,196,0.8)" : "rgba(59,130,246,0.6)"})` : "none";
-         icon.style.filter += h > 0.01 ? ` brightness(${1 + h*0.2})` : "";
+        icon.style.filter = h > 0.01 ? `drop-shadow(0 0 ${h * 20}px ${dark ? "rgba(78,205,196,0.8)" : "rgba(59,130,246,0.6)"})` : "none";
+        icon.style.filter += h > 0.01 ? ` brightness(${1 + h * 0.2})` : "";
       }
       if (span) {
-         span.style.opacity = (0.4 + h*0.6).toFixed(3);
-         span.style.transform = `translateY(${(1-h)*4}px) scale(${1 + h*0.1})`;
-         span.style.color = h > 0.5 ? (dark ? "#4ecdc4" : "#3b82f6") : "";
+        span.style.opacity = (0.4 + h * 0.6).toFixed(3);
+        span.style.transform = `translateY(${(1 - h) * 4}px) scale(${1 + h * 0.1})`;
+        span.style.color = h > 0.5 ? (dark ? "#4ecdc4" : "#3b82f6") : "";
       }
     });
 
@@ -225,7 +366,7 @@ export const Skills: React.FC = () => {
       // momentum logic
       const targetVelX = hoveredRef.current !== null ? baseVelRef.current.x * 0.05 : baseVelRef.current.x;
       const targetVelY = hoveredRef.current !== null ? baseVelRef.current.y * 0.05 : baseVelRef.current.y;
-      
+
       // friction
       velRef.current.x *= 0.95;
       velRef.current.y *= 0.95;
@@ -233,7 +374,7 @@ export const Skills: React.FC = () => {
       // blend with target base rotation
       velRef.current.x += (targetVelX - velRef.current.x) * 0.05;
       velRef.current.y += (targetVelY - velRef.current.y) * 0.05;
-      
+
       rotRef.current.x += velRef.current.x;
       rotRef.current.y += velRef.current.y;
     }
@@ -252,37 +393,80 @@ export const Skills: React.FC = () => {
     // apply force immediately
     velRef.current.y = dx * 0.008;
     velRef.current.x = -dy * 0.008; // X rotation uses Y delta
-    rotRef.current.y += dx * 0.008; 
+    rotRef.current.y += dx * 0.008;
     rotRef.current.x += dy * 0.008;
     lastPosRef.current = { x: e.clientX, y: e.clientY };
   };
 
   return (
-    <section id="skills" className="py-24 px-6 md:px-10 max-w-6xl mx-auto min-h-[90vh] flex flex-col justify-center">
+    <section id="skills" className="py-32 px-6 md:px-10 max-w-6xl mx-auto min-h-screen flex flex-col items-center overflow-visible">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
       <FadeSection direction="down" delay={0.2} className="w-full text-left">
-        <div className="section-header mb-12">
-          <span className={`text-2xl font-mono tracking-tighter ${isDarkMode ? "text-accent-primary" : "text-blue-500"}`}>
+        <div className="section-header mb-16">
+          <span className={`text-4xl font-mono font-bold tracking-tighter ${isDarkMode ? "text-accent-primary" : "text-blue-500"}`}>
             / Skills
           </span>
         </div>
       </FadeSection>
 
-      <div className="flex items-center justify-center flex-1">
+      {/* 3D Globe Section */}
+      <div className="w-full flex justify-center mb-24 overflow-visible">
         <div className="relative cursor-grab active:cursor-grabbing select-none" style={{ width: GLOBE_SIZE, height: GLOBE_SIZE }} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={() => dragRef.current = false} onMouseLeave={() => dragRef.current = false} onTouchStart={(e) => { dragRef.current = true; lastPosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; }} onTouchMove={(e) => { if (dragRef.current) { const dx = e.touches[0].clientX - lastPosRef.current.x; const dy = e.touches[0].clientY - lastPosRef.current.y; velRef.current.y = dx * 0.008; velRef.current.x = -dy * 0.008; rotRef.current.y += dx * 0.008; rotRef.current.x += dy * 0.008; lastPosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; } }} onTouchEnd={() => dragRef.current = false}>
           <canvas ref={canvasRef} width={GLOBE_SIZE} height={GLOBE_SIZE} className="absolute inset-0" style={{ pointerEvents: "none", opacity: isDarkMode ? 0.7 : 0.9 }} />
           <div ref={overlayRef} className="absolute inset-0" style={{ pointerEvents: "none" }}>
             {SKILLS.map((skill, i) => (
               <div key={i} className="skill-tag absolute flex flex-col items-center gap-0.5"
-                   style={{ pointerEvents: "auto", transition: "none" }}
-                   onMouseEnter={() => { hoveredRef.current = i; }}
-                   onMouseLeave={() => { hoveredRef.current = null; }}>
+                style={{ pointerEvents: "auto", transition: "none" }}
+                onMouseEnter={() => { hoveredRef.current = i; }}
+                onMouseLeave={() => { hoveredRef.current = null; }}>
                 <i className={`${skill.icon} text-3xl`} />
                 <span className="text-[10px] font-mono font-bold tracking-widest uppercase mt-1 pointer-events-none">{skill.name}</span>
               </div>
             ))}
           </div>
         </div>
+      </div>
+
+      <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-10 auto-rows-[220px] mb-20 overflow-visible">
+        <BentoCard id="stack-backend" className="md:col-span-8" isDarkMode={isDarkMode} delay={0.1}>
+          <HighlightedText 
+            category="Infrastructure & Backend" 
+            tech="Node.js, Express, Python, fastify, NestJS" 
+            isDarkMode={isDarkMode} 
+          />
+        </BentoCard>
+
+        <BentoCard id="stack-ml" className="md:col-span-4" isDarkMode={isDarkMode} delay={0.2}>
+          <HighlightedText 
+            category="Machine Learning" 
+            tech="GNNs, XGBoost, PyTorch, TensorFlow, LangChain" 
+            isDarkMode={isDarkMode} 
+          />
+        </BentoCard>
+
+        <BentoCard id="stack-arch" className="md:col-span-4" isDarkMode={isDarkMode} delay={0.1}>
+          <HighlightedText 
+            category="Architecture" 
+            tech="AWS, Docker, Linux, Git, Terraform" 
+            isDarkMode={isDarkMode} 
+          />
+        </BentoCard>
+
+        <BentoCard id="stack-data" className="md:col-span-8" isDarkMode={isDarkMode} delay={0.2}>
+          <HighlightedText 
+            category="Data Persistence" 
+            tech="PostgreSQL, MongoDB, Redis, MySQL, DynamoDB" 
+            isDarkMode={isDarkMode} 
+          />
+        </BentoCard>
+
+        <BentoCard id="stack-fe" className="md:col-span-12" isDarkMode={isDarkMode} delay={0.3}>
+          <HighlightedText 
+            category="Interactive Frontend" 
+            tech="React, TypeScript, Three.js, Framer Motion, Tailwind, Next.js" 
+            isDarkMode={isDarkMode} 
+          />
+        </BentoCard>
       </div>
     </section>
   );
