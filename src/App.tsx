@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useTheme } from './hooks/useTheme';
 import { Navbar } from './components/layout/Navbar';
@@ -8,13 +9,26 @@ import { FadeSection } from './components/ui/FadeSection';
 import { GamesPage } from './pages/GamesPage';
 import { BooksPage } from './pages/BooksPage';
 
+import { About } from './components/sections/About';
+
 function MainPage() {
   const { theme } = useTheme();
+
+  useEffect(() => {
+    // Force scroll to top on refresh/load
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex flex-col w-full relative">
       <Navbar />
       <Hero />
+
+      {/* About Section */}
+      <About />
 
       {/* Decorative Divider with BorderGlow context cards */}
       <div className="mx-auto mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full px-6">
@@ -57,9 +71,7 @@ function MainPage() {
         </FadeSection>
       </div>
 
-      <section id="about" className="min-h-screen border-t border-border flex items-center justify-center bg-bg-primary">
-        <FadeSection><h2 className="text-4xl font-display uppercase tracking-widest">About</h2></FadeSection>
-      </section>
+      {/* Experience, Skills, Projects, Contact Section Placeholders */}
       <section id="skills" className="min-h-screen border-t border-border flex items-center justify-center">
         <FadeSection direction="left"><h2 className="text-4xl font-display uppercase tracking-widest">Skills</h2></FadeSection>
       </section>
