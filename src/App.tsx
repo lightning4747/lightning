@@ -11,6 +11,7 @@ import { BooksPage } from './pages/BooksPage';
 
 import { About } from './components/sections/About';
 import { Skills } from './components/sections/Skills';
+import { SocialSidebar } from './components/ui/SocialSidebar';
 
 function MainPage() {
   const { theme } = useTheme();
@@ -26,6 +27,7 @@ function MainPage() {
   return (
     <div className="flex flex-col w-full relative">
       <Navbar />
+      <SocialSidebar />
       <Hero />
 
       {/* About Section */}
