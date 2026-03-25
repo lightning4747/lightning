@@ -18,7 +18,7 @@ const objects: FloatingObject[] = [
     src: '/assets/sword-removebg-preview.png', 
     isImage: true, 
     depth: 0.6, 
-    href: '/katana', 
+    href: '/games', 
     position: { top: '15%', left: '15%' }, 
     rotation: -18, 
     size: 210 
@@ -35,7 +35,7 @@ const objects: FloatingObject[] = [
   },
   { 
     id: 'leetcode', 
-    src: '/assets/leetcode-svgrepo-com.svg', 
+    src: '/assets/leetcode.svg', 
     isImage: false, 
     depth: 0.5, 
     href: 'https://leetcode.com/u/lightning47/', 
