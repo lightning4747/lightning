@@ -1,11 +1,10 @@
 import { useRef, useMemo, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useTheme } from '../../hooks/useTheme';
 
 const TerrainPlane = () => {
   const { theme } = useTheme();
-  const { mouse } = useThree();
   const meshRef = useRef<THREE.Mesh>(null!);
 
   const isDark = theme === 'dark';
@@ -71,10 +70,26 @@ const TerrainPlane = () => {
     uniforms.current.u_baseColor.value.set(isDark ? '#1A1D23' : '#F5F5F5');
   }, [isDark]);
 
+  const vGlobalMouse = useRef(new THREE.Vector2(0.5, 0.5));
+
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      // Map to R3F mouse space [-1, 1]
+      vGlobalMouse.current.set(
+        (e.clientX / window.innerWidth) * 2 - 1,
+        -(e.clientY / window.innerHeight) * 2 + 1
+      );
+    };
+    window.addEventListener('mousemove', handleGlobalMouseMove);
+    return () => window.removeEventListener('mousemove', handleGlobalMouseMove);
+  }, []);
+
   useFrame(({ clock }) => {
     const elapsed = clock.getElapsedTime();
     uniforms.current.u_time.value = elapsed;
-    uniforms.current.u_mouse.value.lerp(mouse, 0.05);
+    
+    // Track global mouse instead of R3F local canvas mouse
+    uniforms.current.u_mouse.value.lerp(vGlobalMouse.current, 0.05);
 
     // Dynamic color cycling (every 2 seconds)
     if (!isDark) {
