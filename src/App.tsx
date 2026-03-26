@@ -12,6 +12,7 @@ import { About } from './components/sections/About';
 import { Skills } from './components/sections/Skills';
 import { Experience } from './components/sections/Experience';
 import { Projects } from './components/sections/Projects';
+import { Contact } from './components/sections/Contact';
 import { SocialSidebar } from './components/ui/SocialSidebar';
 
 // Disable browser scroll restoration at module level, before any React render.
@@ -46,9 +47,7 @@ function MainPage() {
       {/* Projects Section */}
       <Projects />
 
-      <section id="contact" className="min-h-screen border-t border-border flex items-center justify-center">
-        <FadeSection direction="up" distance={100}><h2 className="text-4xl font-display uppercase tracking-widest">Contact</h2></FadeSection>
-      </section>
+      <Contact />
     </div>
   );
 }

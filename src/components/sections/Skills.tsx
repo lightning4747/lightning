@@ -439,7 +439,7 @@ export const Skills: React.FC = () => {
         <BentoCard id="stack-ml" className="md:col-span-4" isDarkMode={isDarkMode} delay={0.2}>
           <HighlightedText
             category="Machine Learning"
-            tech="GNNs, XGBoost, PyTorch, TensorFlow, LangChain"
+            tech="XGBoost, PyTorch, TensorFlow, LangChain"
             isDarkMode={isDarkMode}
           />
         </BentoCard>

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll } from 'framer-motion';
-import { Zap } from 'lucide-react';
 import { ThemeToggle } from '../ui/ThemeToggle';
 
 const navLinks = [
@@ -16,12 +15,20 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
+  const [isLogoClicked, setIsLogoClicked] = useState(false);
+ 
   useEffect(() => {
     return scrollY.onChange((latest) => {
       setIsScrolled(latest > 50);
     });
   }, [scrollY]);
+
+  const handleLogoClick = () => {
+    setIsLogoClicked(true);
+    setTimeout(() => setIsLogoClicked(false), 1000); // 1s flash effect
+  };
+
+  const COLORS = ["#E8645A", "#F5C842", "#5B9CF6", "#5DBE89", "#eb79ff"];
 
   return (
     <motion.nav
@@ -29,29 +36,40 @@ export const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className={`
-        fixed top-0 left-0 right-0 z-[1000] transition-all duration-500
+        fixed top-0 left-0 right-0 z-[9999] transition-all duration-500
         ${isScrolled ? 'py-4 glass-effect' : 'py-8 bg-transparent'}
       `}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <motion.a
-          href="#top"
-          whileHover={{ scale: 1.1, rotate: 15 }}
-          whileTap={{ scale: 0.9 }}
-          className="flex items-center gap-2 group"
+        <div
+          onClick={handleLogoClick}
+          className="flex items-center gap-2 group cursor-pointer select-none"
         >
-          <div className="relative">
-            <Zap className="w-8 h-8 text-accent-primary transition-colors duration-300" />
-            <motion.div
-              layoutId="logo-glow"
-              className="absolute inset-0 bg-accent-primary blur-lg opacity-0 group-hover:opacity-40"
-            />
-          </div>
-          <span className="font-display text-2xl tracking-tighter text-text-primary hidden sm:block">
-            LIGHTNING
-          </span>
-        </motion.a>
+          <motion.span 
+            className="font-display text-2xl text-text-primary hidden sm:flex"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {"Vignesh".split("").map((char, index) => (
+              <motion.span
+                key={index}
+                animate={{ 
+                  color: isLogoClicked 
+                    ? COLORS[index % COLORS.length] 
+                    : "inherit" 
+                }}
+                whileHover={{ 
+                  color: COLORS[index % COLORS.length],
+                  y: -2,
+                }}
+                transition={{ duration: 0.2 }}
+              >
+                {char}
+              </motion.span>
+            ))}
+          </motion.span>
+        </div>
 
         {/* Desktop Nav Links */}
         <div 

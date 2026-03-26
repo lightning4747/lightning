@@ -27,7 +27,7 @@ const SPOTLIGHT_PROJECTS = [
     accent: "#5DBE89",
   },
   {
-    title: "GCN Implementation",
+    title: "Convolutional Neural Network",
     desc: "Semi-Supervised Classification with Graph Convolutional Networks (GCN).",
     techStack: "PYTHON, PYTORCH, GEOMETRIC",
     github: "https://github.com/lightning4747",
@@ -40,7 +40,7 @@ const OTHER_PROJECTS = [
   {
     title: "Real-Time Fraud Intelligence",
     desc: "A serverless pipeline for detecting fraudulent transactions in real-time using AWS streaming services.",
-    tech: "AWS Lambda, Kinesis, DynamoDB, Python",
+    tech: "AWS Lambda, Neptune, Python",
     github: "https://github.com/lightning4747/Serverless-Real-Time-Fraud-Intelligence",
   },
   {
@@ -52,13 +52,13 @@ const OTHER_PROJECTS = [
   {
     title: "Luminary",
     desc: "A light-weight UI/UX exploration focused on modern lighting and atmospheric design patterns.",
-    tech: "Javascript, CSS3, Framer Motion",
+    tech: "React, Tailwind, Framer Motion",
     github: "https://github.com/lightning4747/Luminary",
   },
   {
     title: "University Management",
     desc: "An enterprise-level system for managing student records, faculty schedules, and academic auditing.",
-    tech: "Java, Spring Boot, MySQL",
+    tech: "PostgreSQL, Node.js, React.js, Express",
     github: "https://github.com/lightning4747/Full-scale-University-Management-System",
   },
   {
@@ -70,7 +70,7 @@ const OTHER_PROJECTS = [
   {
     title: "Arcana Vision",
     desc: "A computer vision experiment identifying and cataloging symbolic data within live video feeds.",
-    tech: "Python, OpenCV, TensorFlow",
+    tech: "Javascript, Three js",
     github: "https://github.com/lightning4747/Arcana-vision",
   },
 ];
@@ -97,7 +97,7 @@ const ExternalLinks = ({ link, isDarkMode }: any) => (
 
 const FeaturedCard = ({ project, isDarkMode }: any) => {
   const isFinalCut = project.title.includes("The Final Cut");
-  const isGCN = project.title.includes("GCN");
+  const isGCN = project.title.includes("Convolutional Neural Network");
 
   // Style overrides for specific projects
   const titleColor = isFinalCut ? "#eb79ffff" /* Bright pink */ : (isGCN ? "#fa7070ff" /* Lite Red */ : undefined);
@@ -228,13 +228,10 @@ export const Projects: React.FC = () => {
       const progress = Math.max(0, Math.min(1, -rect.top / spotlightHeight));
       setSpotlightProgress(progress);
 
-      // Map progress to active spotlight index (starting slightly after top)
-      const START_THRESHOLD = 0.1;
-      if (progress >= START_THRESHOLD) {
-        const step = (1 - START_THRESHOLD) / SPOTLIGHT_PROJECTS.length;
-        const index = Math.min(Math.floor((progress - START_THRESHOLD) / step), SPOTLIGHT_PROJECTS.length - 1);
-        setCurrentFeatured(index);
-      }
+      // Map progress to active spotlight index (starting immediately)
+      const step = 1 / SPOTLIGHT_PROJECTS.length;
+      const index = Math.min(Math.floor(progress / step), SPOTLIGHT_PROJECTS.length - 1);
+      setCurrentFeatured(index);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -248,7 +245,7 @@ export const Projects: React.FC = () => {
       <div
         ref={spotlightRef}
         className="relative"
-        style={{ height: "450vh" }}
+        style={{ height: "350vh" }}
       >
         <div className="sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden">
 
@@ -268,9 +265,9 @@ export const Projects: React.FC = () => {
             <motion.div
               className="w-full h-full"
               initial={{ opacity: 0, scale: 0.95 }}
-              animate={spotlightProgress > 0.05 ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: false, margin: "-100px" }}
               transition={{ duration: 0.8 }}
-              style={{ opacity: spotlightProgress > 0.95 ? 0 : 1 }}
             >
               {SPOTLIGHT_PROJECTS.map((project, i) => (
                 <motion.div
@@ -279,7 +276,7 @@ export const Projects: React.FC = () => {
                   style={{ zIndex: i === currentFeatured ? 10 : 0 }}
                   initial={false}
                   animate={{
-                    opacity: i === currentFeatured ? 1 : 0,
+                    opacity: i === currentFeatured ? (i === SPOTLIGHT_PROJECTS.length - 1 && spotlightProgress > 0.95 ? 1 - (spotlightProgress - 0.95) * 20 : 1) : 0,
                     x: i === currentFeatured ? 0 : (i < currentFeatured ? -200 : 200),
                     filter: i === currentFeatured ? "blur(0px)" : "blur(40px)",
                     scale: i === currentFeatured ? 1 : 0.9
@@ -315,14 +312,9 @@ export const Projects: React.FC = () => {
       </div>
 
       {/* ─── PHASE 2: ARCHIVE GRID ─── */}
-      <div className="relative z-50 py-32 px-6 md:px-20 max-w-7xl mx-auto -mt-24">
+      <div className="relative z-50 py-32 px-6 md:px-20 max-w-7xl mx-auto -mt-[15vh]">
         <div className="mb-16">
-          <FadeSection direction="up">
-            <span className={`text-4xl md:text-5xl font-display font-bold tracking-tight mb-4 block ${isDarkMode ? "text-slate-100" : "text-slate-900"}`}>
-              archiving / <span className="text-accent-primary">other creations</span>
-            </span>
-            <div className={`w-24 h-1 mb-8 ${isDarkMode ? "bg-accent-primary" : "bg-blue-600"}`} />
-          </FadeSection>
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-32">
