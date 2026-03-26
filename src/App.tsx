@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useTheme } from './hooks/useTheme';
 import { Navbar } from './components/layout/Navbar';
@@ -11,16 +11,20 @@ import { BooksPage } from './pages/BooksPage';
 import { About } from './components/sections/About';
 import { Skills } from './components/sections/Skills';
 import { Experience } from './components/sections/Experience';
+import { Projects } from './components/sections/Projects';
 import { SocialSidebar } from './components/ui/SocialSidebar';
+
+// Disable browser scroll restoration at module level, before any React render.
+if ('scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual';
+}
 
 function MainPage() {
   const { theme } = useTheme();
 
-  useEffect(() => {
-    // Force scroll to top on refresh/load
-    if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual';
-    }
+  useLayoutEffect(() => {
+    // Synchronously scroll to top before the browser paints — prevents
+    // the browser's scroll restoration from jumping to Skills section on reload.
     window.scrollTo(0, 0);
   }, []);
 
@@ -39,9 +43,9 @@ function MainPage() {
       {/* Experience Section */}
       <Experience />
 
-      <section id="projects" className="min-h-screen border-t border-border flex items-center justify-center">
-        <FadeSection direction="none"><h2 className="text-4xl font-display uppercase tracking-widest">Projects</h2></FadeSection>
-      </section>
+      {/* Projects Section */}
+      <Projects />
+
       <section id="contact" className="min-h-screen border-t border-border flex items-center justify-center">
         <FadeSection direction="up" distance={100}><h2 className="text-4xl font-display uppercase tracking-widest">Contact</h2></FadeSection>
       </section>
