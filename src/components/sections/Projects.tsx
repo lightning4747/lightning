@@ -1,13 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import GitHubIcon from '@mui/icons-material/GitHub';
 import LaunchIcon from '@mui/icons-material/Launch';
 import FolderOpenRoundedIcon from '@mui/icons-material/FolderOpenRounded';
 import { useTheme } from "../../hooks/useTheme";
 import { FadeSection } from "../ui/FadeSection";
 import BorderGlow from "../ui/BorderGlow";
-
-/* ─── Project Data ─────────────────────────────────────────────────────────── */
 
 /* ─── Project Data ─────────────────────────────────────────────────────────── */
 
@@ -82,25 +79,14 @@ const LIGHT_PALETTE = ['#E8645A', '#F5C842', '#5B9CF6', '#5DBE89'];
 
 /* ─── Components ─────────────────────────────────────────────────────────── */
 
-const ExternalLinks = ({ github, link, isDarkMode }: any) => (
+const ExternalLinks = ({ link, isDarkMode }: any) => (
   <div className="flex gap-4 items-center">
-    {github && (
-      <a
-        href={github}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="transition-transform hover:scale-110"
-        style={{ color: isDarkMode ? "var(--text-secondary)" : "var(--text-muted)" }}
-      >
-        <GitHubIcon style={{ fontSize: 20 }} className="hover:text-accent-primary transition-colors" />
-      </a>
-    )}
     {link && (
       <a
         href={link}
         target="_blank"
         rel="noopener noreferrer"
-        className="transition-transform hover:scale-110"
+        className="transition-transform hover:scale-110 relative z-20 pointer-events-auto"
         style={{ color: isDarkMode ? "var(--text-secondary)" : "var(--text-muted)" }}
       >
         <LaunchIcon style={{ fontSize: 20 }} className="hover:text-accent-primary transition-colors" />
@@ -109,37 +95,58 @@ const ExternalLinks = ({ github, link, isDarkMode }: any) => (
   </div>
 );
 
-const FeaturedCard = ({ project, isDarkMode }: any) => (
-  <div className="relative w-full h-full rounded-[40px] overflow-hidden group shadow-2xl">
-    <img
-      src={project.image}
-      alt={project.title}
-      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-      style={{ opacity: isDarkMode ? 0.4 : 0.6 }}
-    />
-    <div
-      className={`absolute inset-0 transition-opacity duration-500
-        ${isDarkMode
-          ? "bg-gradient-to-t from-[#141414] via-[#141414]/60 to-transparent"
-          : "bg-gradient-to-t from-white via-white/40 to-transparent"}`}
-    />
+const FeaturedCard = ({ project, isDarkMode }: any) => {
+  const isFinalCut = project.title.includes("The Final Cut");
+  const isGCN = project.title.includes("GCN");
 
-    <div className="absolute inset-0 border-[1.5px] border-white/10 rounded-[40px] pointer-events-none" />
+  // Style overrides for specific projects
+  const titleColor = isFinalCut ? "#eb79ffff" /* Bright pink */ : (isGCN ? "#fa7070ff" /* Lite Red */ : undefined);
+  const textOverride = (isFinalCut || isGCN) ? "text-white" : undefined;
 
-    <div className="absolute bottom-12 left-12 right-12 z-10">
-      <span className="font-mono text-[10px] tracking-[0.4em] uppercase mb-4 block" style={{ color: project.accent }}>
-        {project.techStack}
-      </span>
-      <h3 className={`text-4xl md:text-6xl font-display font-bold tracking-tighter mb-4 ${isDarkMode ? "text-slate-100" : "text-slate-900"}`}>
-        {project.title}
-      </h3>
-      <p className={`text-lg max-w-2xl mb-8 leading-relaxed ${isDarkMode ? "text-slate-400" : "text-slate-600"}`}>
-        {project.desc}
-      </p>
-      <ExternalLinks github={project.github} link={project.link} isDarkMode={isDarkMode} />
-    </div>
-  </div>
-);
+  return (
+    <a 
+      href={project.github}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block relative w-full h-full rounded-[40px] overflow-hidden group shadow-2xl cursor-pointer"
+    >
+      <img
+        src={project.image}
+        alt={project.title}
+        className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:brightness-125"
+        style={{ opacity: isDarkMode ? 0.8 : 1.0 }} 
+      />
+      <div
+        className={`absolute inset-0 transition-opacity duration-500
+          ${isDarkMode
+            ? "bg-gradient-to-t from-[#141414]/90 via-[#141414]/20 via-40% to-transparent"
+            : "bg-gradient-to-t from-white/60 via-white/5 via-30% to-transparent"}`}
+      />
+
+      {/* Dark overlay for specific high-brightness projects to ensure text pop if not in dark mode manually */}
+      {(isFinalCut || isGCN) && !isDarkMode && (
+        <div className="absolute inset-0 bg-black/20" />
+      )}
+
+      <div className="absolute inset-0 border-[1.5px] border-white/10 rounded-[40px] pointer-events-none" />
+
+      <div className="absolute bottom-12 left-12 right-12 z-10 pointer-events-none">
+        <span className="font-mono text-[10px] tracking-[0.4em] uppercase mb-4 block" style={{ color: project.accent }}>
+          {project.techStack}
+        </span>
+        <h3 className="text-4xl md:text-6xl font-display font-bold tracking-tighter mb-2"
+          style={{ color: titleColor || (isDarkMode ? "#f1f5f9" : "#0f172a") }}
+        >
+          {project.title}
+        </h3>
+        <p className={`text-lg max-w-2xl mb-8 leading-relaxed ${textOverride || (isDarkMode ? "text-slate-200" : "text-slate-700")} drop-shadow-lg`}>
+          {project.desc}
+        </p>
+        <ExternalLinks link={project.link} isDarkMode={isDarkMode} />
+      </div>
+    </a>
+  );
+};
 
 const ProjectGridItem = ({ project, isDarkMode, index }: any) => {
   const [rotation, setRotation] = useState(0);
@@ -155,8 +162,12 @@ const ProjectGridItem = ({ project, isDarkMode, index }: any) => {
 
   return (
     <FadeSection direction="up" delay={index * 0.1} distance={20}>
-      <div className="h-full group relative">
-        {/* Intense Background Glow (Conic Gradient) */}
+      <a 
+        href={project.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block h-full group relative cursor-pointer"
+      >
         <div 
           className="absolute -inset-[2px] rounded-[26px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md -z-10"
           style={{ background: conicGradient }}
@@ -178,7 +189,7 @@ const ProjectGridItem = ({ project, isDarkMode, index }: any) => {
           <div className="p-8 h-full flex flex-col relative z-10">
             <div className="flex justify-between items-start mb-8">
               <FolderOpenRoundedIcon style={{ fontSize: 35, color: isDarkMode ? "var(--accent-primary)" : "#3b82f6" }} />
-              <ExternalLinks github={project.github} link={project.link} isDarkMode={isDarkMode} />
+              <ExternalLinks link={project.link} isDarkMode={isDarkMode} />
             </div>
             <h4 className={`text-xl font-display font-bold tracking-tight mb-4 transition-colors group-hover:text-accent-primary ${isDarkMode ? "text-slate-100" : "text-slate-900"}`}>
               {project.title}
@@ -191,7 +202,7 @@ const ProjectGridItem = ({ project, isDarkMode, index }: any) => {
             </div>
           </div>
         </BorderGlow>
-      </div>
+      </a>
     </FadeSection>
   );
 };
