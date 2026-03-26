@@ -75,7 +75,7 @@ function midpoint(a: Vec3, b: Vec3): Vec3 {
 
 function buildGeodesicTriangles(subdivisions: number, radius: number): Triangle[] {
   const t = (1 + Math.sqrt(5)) / 2;
-  const baseVerts: Vec3[] = [[-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0], [0, -1, t], [0, 1, t], [0, -1, -t], [0, 1, -t], [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1]].map(normalize) as Vec3[];
+  const baseVerts: Vec3[] = ([[-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0], [0, -1, t], [0, 1, t], [0, -1, -t], [0, 1, -t], [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1]] as any).map(normalize);
   let faces: [number, number, number][] = [[0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11], [1, 5, 9], [5, 11, 4], [11, 10, 2], [10, 7, 6], [7, 1, 8], [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9], [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1]];
   let verts = [...baseVerts];
   for (let s = 0; s < subdivisions; s++) {
@@ -135,9 +135,9 @@ const BentoCard = ({ children, className, isDarkMode, id, delay = 0 }: any) => {
         ${isDarkMode ? "text-accent-primary" : "text-slate-400"}`}>
         SYS-OP / {id?.toUpperCase()}-SEC
       </div>
-      
+
       <div className={`absolute bottom-6 left-10 w-8 h-[1px] opacity-30
-        ${isDarkMode ? "bg-accent-primary" : "bg-slate-400"}`} 
+        ${isDarkMode ? "bg-accent-primary" : "bg-slate-400"}`}
       />
     </div>
   );
@@ -146,10 +146,10 @@ const BentoCard = ({ children, className, isDarkMode, id, delay = 0 }: any) => {
     <motion.div
       initial={{ opacity: 0, scale: 0.95, y: 30 }}
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ 
-        duration: 0.8, 
-        delay, 
-        ease: [0.16, 1, 0.3, 1] 
+      transition={{
+        duration: 0.8,
+        delay,
+        ease: [0.16, 1, 0.3, 1]
       }}
       viewport={{ once: true }}
       className={`${className} relative group h-full transition-transform duration-500`}
@@ -171,7 +171,7 @@ const BentoCard = ({ children, className, isDarkMode, id, delay = 0 }: any) => {
         // LIGHT MODE: Gradient border appears strictly BEHIND on hover
         <div className="relative h-full w-full rounded-[40px] overflow-visible">
           {/* Conic Gradient Border/Shape strictly BEHIND card (revealed on hover) */}
-          <div 
+          <div
             className="absolute -inset-[3px] rounded-[43px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10 pointer-events-none"
             style={{
               background: conicGradient,
@@ -195,19 +195,19 @@ const BentoCard = ({ children, className, isDarkMode, id, delay = 0 }: any) => {
 
 const SkillWord = ({ word, isDarkMode }: { word: string, isDarkMode: boolean }) => {
   const [hoverColor, setHoverColor] = useState<string | null>(null);
-  const colors = isDarkMode 
+  const colors = isDarkMode
     ? ["#4ecdc4", "#3b82f6", "#0ea5e9", "#4ecdc4"]
-    : LIGHT_PALETTE; 
+    : LIGHT_PALETTE;
 
   const handleMouseEnter = () => {
     setRotationGlobal(); // Trigger a slight rotation nudge maybe
     setHoverColor(colors[Math.floor(Math.random() * colors.length)]);
   };
 
-  const setRotationGlobal = () => {};
+  const setRotationGlobal = () => { };
 
   return (
-    <span 
+    <span
       onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setHoverColor(null)}
       className={`font-bold transition-all duration-300 hover:scale-110 inline-block cursor-crosshair
@@ -429,42 +429,42 @@ export const Skills: React.FC = () => {
 
       <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-10 auto-rows-[220px] mb-20 overflow-visible">
         <BentoCard id="stack-backend" className="md:col-span-8" isDarkMode={isDarkMode} delay={0.1}>
-          <HighlightedText 
-            category="Infrastructure & Backend" 
-            tech="Node.js, Express, Python, fastify, NestJS" 
-            isDarkMode={isDarkMode} 
+          <HighlightedText
+            category="Infrastructure & Backend"
+            tech="Node.js, Express, Python, fastify, NestJS"
+            isDarkMode={isDarkMode}
           />
         </BentoCard>
 
         <BentoCard id="stack-ml" className="md:col-span-4" isDarkMode={isDarkMode} delay={0.2}>
-          <HighlightedText 
-            category="Machine Learning" 
-            tech="GNNs, XGBoost, PyTorch, TensorFlow, LangChain" 
-            isDarkMode={isDarkMode} 
+          <HighlightedText
+            category="Machine Learning"
+            tech="GNNs, XGBoost, PyTorch, TensorFlow, LangChain"
+            isDarkMode={isDarkMode}
           />
         </BentoCard>
 
         <BentoCard id="stack-arch" className="md:col-span-4" isDarkMode={isDarkMode} delay={0.1}>
-          <HighlightedText 
-            category="Architecture" 
-            tech="AWS, Docker, Linux, Git, Terraform" 
-            isDarkMode={isDarkMode} 
+          <HighlightedText
+            category="Architecture"
+            tech="AWS, Docker, Linux, Git, Terraform"
+            isDarkMode={isDarkMode}
           />
         </BentoCard>
 
         <BentoCard id="stack-data" className="md:col-span-8" isDarkMode={isDarkMode} delay={0.2}>
-          <HighlightedText 
-            category="Data Persistence" 
-            tech="PostgreSQL, MongoDB, Redis, MySQL, DynamoDB" 
-            isDarkMode={isDarkMode} 
+          <HighlightedText
+            category="Data Persistence"
+            tech="PostgreSQL, MongoDB, Redis, MySQL, DynamoDB"
+            isDarkMode={isDarkMode}
           />
         </BentoCard>
 
         <BentoCard id="stack-fe" className="md:col-span-12" isDarkMode={isDarkMode} delay={0.3}>
-          <HighlightedText 
-            category="Interactive Frontend" 
-            tech="React, TypeScript, Three.js, Framer Motion, Tailwind, Next.js" 
-            isDarkMode={isDarkMode} 
+          <HighlightedText
+            category="Interactive Frontend"
+            tech="React, TypeScript, Three.js, Framer Motion, Tailwind, Next.js"
+            isDarkMode={isDarkMode}
           />
         </BentoCard>
       </div>

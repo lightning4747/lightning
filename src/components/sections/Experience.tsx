@@ -18,8 +18,7 @@ const EXPERIENCE_DATA: ExperienceItem[] = [
     duration: "FEB 2026 - PRESENT",
     desc: [
       "Architected and deployed a scalable backend infrastructure for a textile-industry SaaS, managing a repository of over 400,000 image assets.",
-      "Engineered event-driven data pipelines using AWS S3 and Lambda to automate image processing and metadata extraction, significantly reducing manual overhead.",
-      "Optimized relational database performance and storage costs by implementing efficient PostgreSQL indexing and S3 lifecycle policies for high-frequency assets.",
+      "Optimized relational database performance and storage costs by implementing efficient PostgreSQL indexing.",
       "Developed robust RESTful APIs using the PERN (PostgreSQL, Express, React, Node.js) stack to support enterprise-level inventory and asset tracking features."
     ],
   },
@@ -36,10 +35,10 @@ export const Experience: React.FC = () => {
 
   return (
     <section id="experience" className="py-24 px-6 md:px-10 max-w-5xl mx-auto min-h-[80vh] flex flex-col justify-center overflow-visible">
-      <FadeSection direction="down" delay={0.2}>
+      <FadeSection direction="down" delay={0.2} className="w-full text-left">
         <div className="section-header mb-16">
           <span className={`text-4xl font-mono font-bold tracking-tighter ${isDarkMode ? "text-accent-primary" : "text-blue-500"}`}>
-            / experience
+            / Experience
           </span>
         </div>
       </FadeSection>

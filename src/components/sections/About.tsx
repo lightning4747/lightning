@@ -6,7 +6,7 @@ import BorderGlow from "../ui/BorderGlow";
 
 const LIGHT_PALETTE = ['#E8645A', '#F5C842', '#5B9CF6', '#5DBE89'];
 
-const MiniSocialCard = ({ icon, label, subtext, link, isDarkMode, id }: any) => {
+const MiniSocialCard = ({ icon, label, subtext, link, isDarkMode }: any) => {
   const [rotation, setRotation] = useState(0);
 
   useEffect(() => {
@@ -33,15 +33,15 @@ const MiniSocialCard = ({ icon, label, subtext, link, isDarkMode, id }: any) => 
         </span>
       </div>
       <div className={`ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isDarkMode ? "text-accent-primary" : "text-blue-500"}`}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7" /></svg>
       </div>
     </div>
   );
 
   return (
-    <a 
-      href={link} 
-      target="_blank" 
+    <a
+      href={link}
+      target="_blank"
       rel="noopener noreferrer"
       className="group relative block w-full sm:w-[280px]"
     >
@@ -59,7 +59,7 @@ const MiniSocialCard = ({ icon, label, subtext, link, isDarkMode, id }: any) => 
         </BorderGlow>
       ) : (
         <div className="relative h-full w-full rounded-2xl overflow-visible">
-          <div 
+          <div
             className="absolute -inset-[3px] rounded-[19px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"
             style={{ background: conicGradient }}
           />
@@ -103,7 +103,7 @@ export const About: React.FC = () => {
 
   return (
     <section id="about" className="py-24 px-6 md:px-10 max-w-6xl mx-auto min-h-[80vh] flex flex-col justify-center overflow-visible">
-      
+
       {/* GLOBAL SVG DEFINITIONS (Filter + Mask) */}
       <svg style={{ position: "absolute", width: 0, height: 0, pointerEvents: "none" }} aria-hidden="true">
         <defs>
@@ -111,7 +111,7 @@ export const About: React.FC = () => {
             <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" result="warp" />
             <feDisplacementMap in="SourceGraphic" in2="warp" scale="25" />
           </filter>
-          
+
           <mask id="wavy-mask">
             <rect width="100%" height="100%" fill="black" />
             <circle cx={mousePos.x} cy={mousePos.y} r="45" fill="white" filter="url(#liquid-glitch)" />
@@ -119,9 +119,9 @@ export const About: React.FC = () => {
         </defs>
       </svg>
 
-      <FadeSection direction="down" delay={0.2}>
-        <div className="section-header mb-12">
-          <span className={`text-2xl font-mono tracking-tighter ${isDarkMode ? "text-accent-primary" : "text-blue-500"}`}>
+      <FadeSection direction="down" delay={0.2} className="w-full text-left">
+        <div className="section-header mb-16">
+          <span className={`text-4xl font-mono font-bold tracking-tighter ${isDarkMode ? "text-accent-primary" : "text-blue-500"}`}>
             / about me
           </span>
         </div>
@@ -129,23 +129,22 @@ export const About: React.FC = () => {
 
       {/* Main Core Section: Image + Text Row */}
       <div className="flex flex-col md:flex-row gap-12 items-start">
-        
+
         {/* LEFT SIDE: Image Only */}
         <FadeSection direction="right" delay={0.4} className="shrink-0 w-full md:w-auto flex justify-center md:justify-start">
-          <div 
+          <div
             ref={containerRef}
             onMouseMove={handleMouseMove}
             onMouseEnter={() => { setMousePos(prev => ({ ...prev, active: true })); setIsHovered(true); }}
             onMouseLeave={() => { setMousePos(prev => ({ ...prev, active: false })); setIsHovered(false); }}
             className="relative group cursor-crosshair w-64"
           >
-            <motion.div 
-              animate={{ 
-                boxShadow: `${shadowOffset.x}px ${shadowOffset.y}px 30px ${
-                  isDarkMode 
-                    ? `rgba(78, 205, 196, ${shadowOffset.opacity})` 
+            <motion.div
+              animate={{
+                boxShadow: `${shadowOffset.x}px ${shadowOffset.y}px 30px ${isDarkMode
+                    ? `rgba(78, 205, 196, ${shadowOffset.opacity})`
                     : `rgba(59, 130, 246, ${shadowOffset.opacity})`
-                }`
+                  }`
               }}
               transition={{ type: "spring", stiffness: 150, damping: 20 }}
               className={`relative z-10 w-64 h-80 overflow-hidden rounded-lg border-2 transition-colors duration-500
@@ -178,7 +177,7 @@ export const About: React.FC = () => {
               </AnimatePresence>
             </motion.div>
             <div className={`absolute -bottom-4 -left-4 w-full h-full -z-10 rounded-lg transition-colors duration-500
-              ${isDarkMode ? "bg-slate-800/50" : "bg-blue-50/50"}`} 
+              ${isDarkMode ? "bg-slate-800/50" : "bg-blue-50/50"}`}
             />
           </div>
         </FadeSection>
@@ -188,17 +187,17 @@ export const About: React.FC = () => {
           <div className={`about-description space-y-4 p-2 transition-all duration-500 
             ${isDarkMode ? "text-slate-400" : "text-slate-700"}`}>
             <p className="text-lg leading-relaxed">
-              I am a student at <b>MCET</b> pursuing my <b>B.Tech in Artificial Intelligence & Data Science</b>. 
-              Currently, I'm a <b>Software Engineer Intern</b> at 
-              <a href="https://eanstall.com" target="_blank" rel="noopener noreferrer" 
-                 className={`mx-1 font-bold ${isDarkMode ? "text-accent-primary hover:text-white" : "text-blue-600 hover:text-blue-800"}`}> 
-                 EANS Technologies
-              </a>, 
+              I am a student at <b>MCET</b> pursuing my <b>B.Tech in Artificial Intelligence & Data Science</b>.
+              Currently, I'm a <b>Software Engineer Intern</b> at
+              <a href="https://eanstall.com" target="_blank" rel="noopener noreferrer"
+                className={`mx-1 font-bold ${isDarkMode ? "text-accent-primary hover:text-white" : "text-blue-600 hover:text-blue-800"}`}>
+                EANS Technologies
+              </a>,
               where I architect scalable backend systems and optimize high-performance cloud infrastructure.
             </p>
             <p className="text-lg leading-relaxed">
-              When I’m not deep in a terminal, I’m usually exploring <b>Machine Learning</b>—diving into different concepts, 
-              techniques, and building models across various domains. Outside of code, 
+              When I’m not deep in a terminal, I’m usually exploring <b>Machine Learning</b>—diving into different concepts,
+              techniques, and building models across various domains. Outside of code,
               I’m into physics and play way too many Souls games.
             </p>
             <div className="pt-4">
@@ -229,7 +228,7 @@ export const About: React.FC = () => {
 
       {/* INDEPENDENT SOCIAL CARDS: Positioned under everything */}
       <FadeSection direction="up" delay={0.6} className="mt-16 flex flex-col sm:flex-row gap-6 w-full max-w-2xl">
-        <MiniSocialCard 
+        <MiniSocialCard
           id="github-stats-bottom"
           icon="/assets/github-142-svgrepo-com.svg"
           label="GitHub"
@@ -237,7 +236,7 @@ export const About: React.FC = () => {
           link="https://github.com/lightning4747"
           isDarkMode={isDarkMode}
         />
-        <MiniSocialCard 
+        <MiniSocialCard
           id="leetcode-stats-bottom"
           icon="/assets/leetcode.svg"
           label="LeetCode"

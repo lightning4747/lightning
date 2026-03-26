@@ -83,7 +83,7 @@ export const Hero = () => {
               </span>
             </h1>
 
-            <FadeSection delay={2.8} direction="up" distance={20}>
+            <FadeSection delay={1.4} direction="up" distance={20}>
               <p className={`text-lg md:text-xl font-sans leading-relaxed transition-colors duration-500 
                 ${isDarkMode ? "text-slate-400" : "text-slate-600"}`}>
                 I'm a <b>Full Stack Software Engineer</b> fascinated by high-performance systems and 
@@ -92,7 +92,7 @@ export const Hero = () => {
               </p>
             </FadeSection>
 
-            <FadeSection delay={3.5} direction="up" distance={20}>
+            <FadeSection delay={2.0} direction="up" distance={20}>
               <div className="flex justify-center pt-4">
                 <a 
                   href="mailto:contact@vignesh112847@gmail.com" 
