@@ -1,73 +1,35 @@
-# React + TypeScript + Vite
+# lightning-portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+lowkey built this. it exists (no cap). built with React, TS, and some Three.js because plain HTML is literally mid.
 
-Currently, two official plugins are available:
+there's spinning things and glowing cards. if you're into that aura, cool i guess.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Screenshots (lowkey fire)
 
-## React Compiler
+| Light Theme (flashbang) | Dark Theme (smooth vibes) |
+|---|---|
+| ![LIGHT_PLACEHOLDER](public/light.png) | ![DARK_PLACEHOLDER](public/dark.png) |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## The "Stack" (bet)
 
-## Expanding the ESLint configuration
+- **React / Vite**: because waiting for builds is an absolute L.
+- **Three.js**: used math to make things rotate. don't even ask, my brain is cooked.
+- **Framer Motion**: for those jit animations.
+- **Tailwind**: because writing CSS from scratch is not it.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Features (aura +1000)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **The Sphere**: a globe of skills. you can drag it or whatever.
+- **Sticky Spots**: featured projects that stay in your face longer than they should.
+- **Contact CLI**: a fake terminal. looks hacker-ish for the gram.
+- **Logo**: i'm goated for this one. click my name, it turns colors. 
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Run it (if you're not busy being a NPC)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. git clone this fr.
+2. `npm install` (rip to your node_modules).
+3. `npm run dev`
+4. go to `localhost:5173`.
+5. leave a star or don't. it's fine.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+delulu is the solulu.
