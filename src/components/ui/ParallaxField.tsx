@@ -73,57 +73,54 @@ export const ParallaxField = () => {
   useEffect(() => {
     if (theme === 'dark') return;
 
+    let rafId = 0;
     const handleMouseMove = (e: MouseEvent) => {
-      const { innerWidth, innerHeight } = window;
-      const x = (e.clientX / innerWidth) - 0.5;
-      const y = (e.clientY / innerHeight) - 0.5;
+      if (rafId) return; // already scheduled
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        const { innerWidth, innerHeight } = window;
+        const x = (e.clientX / innerWidth) - 0.5;
+        const y = (e.clientY / innerHeight) - 0.5;
 
-      const factor = 120;
-      const activationRadius = 400; // Pixels until icon starts 'waking up'
+        const factor = 120;
+        const activationRadius = 400;
 
-      objects.forEach((obj) => {
-        const ref = itemRefs.current[obj.id];
-        const inner = innerRefs.current[obj.id];
-        
-        if (ref && inner) {
-          // 1. Static Parallax Movement
-          const moveX = x * obj.depth * factor;
-          const moveY = y * obj.depth * factor;
-          ref.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) rotate(${obj.rotation}deg)`;
-
-          // 2. Proximity-based 'Glow Up'
-          // Estimated object center based on its % position
-          const objX = innerWidth * (parseFloat(obj.position.left) / 100);
-          const objY = innerHeight * (parseFloat(obj.position.top) / 100);
+        objects.forEach((obj) => {
+          const ref = itemRefs.current[obj.id];
+          const inner = innerRefs.current[obj.id];
           
-          const dx = e.clientX - objX - moveX;
-          const dy = e.clientY - objY - moveY;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          // Influence between 0 and 1
-          const influence = Math.max(0, 1 - (distance / activationRadius));
-          const easedInfluence = influence * influence; // Quadratic ease-in
+          if (ref && inner) {
+            const moveX = x * obj.depth * factor;
+            const moveY = y * obj.depth * factor;
+            ref.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) rotate(${obj.rotation}deg)`;
 
-          // Apply mutations to inner element (opacity, scale, saturation)
-          const baseOpacity = 0.35;
-          const maxOpacity = 1.0;
-          const opacity = baseOpacity + (maxOpacity - baseOpacity) * easedInfluence;
-          
-          const baseScale = 1.0;
-          const maxScale = 1.25;
-          const scale = baseScale + (maxScale - baseScale) * easedInfluence;
+            const objX = innerWidth * (parseFloat(obj.position.left) / 100);
+            const objY = innerHeight * (parseFloat(obj.position.top) / 100);
+            
+            const dx = e.clientX - objX - moveX;
+            const dy = e.clientY - objY - moveY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            const influence = Math.max(0, 1 - (distance / activationRadius));
+            const easedInfluence = influence * influence;
 
-          const grayscale = 100 - (100 * easedInfluence);
+            const opacity = 0.35 + 0.65 * easedInfluence;
+            const scale = 1.0 + 0.25 * easedInfluence;
+            const grayscale = 100 - (100 * easedInfluence);
 
-          inner.style.opacity = opacity.toString();
-          inner.style.transform = `scale(${scale})`;
-          inner.style.filter = `grayscale(${grayscale}%) drop-shadow(0 0 20px rgba(0,0,0,${0.1 + (0.1 * easedInfluence)}))`;
-        }
+            inner.style.opacity = opacity.toString();
+            inner.style.transform = `scale(${scale})`;
+            inner.style.filter = `grayscale(${grayscale}%) drop-shadow(0 0 20px rgba(0,0,0,${0.1 + (0.1 * easedInfluence)}))`;
+          }
+        });
       });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(rafId);
+    };
   }, [theme]);
 
   if (theme === 'dark') return null;
