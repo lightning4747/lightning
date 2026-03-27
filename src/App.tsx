@@ -44,7 +44,7 @@ function MainPage() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/lightning">
       <ClickSpark sparkColor="random" sparkSize={17} sparkRadius={15} sparkCount={8} duration={400}>
         <Routes>
           <Route path="/" element={<MainPage />} />

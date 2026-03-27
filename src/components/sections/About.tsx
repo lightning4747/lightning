@@ -99,7 +99,7 @@ export const About: React.FC = () => {
     opacity: 0.6
   } : { x: -4, y: 10, opacity: 0.2 };
 
-  const imageSrc = "/assets/WhatsApp Image 2026-03-25 at 8.24.21 PM (1).jpeg";
+  const imageSrc = import.meta.env.BASE_URL + "assets/WhatsApp Image 2026-03-25 at 8.24.21 PM (1).jpeg";
 
   return (
     <section id="about" className="py-24 px-6 md:px-10 max-w-6xl mx-auto min-h-[80vh] flex flex-col justify-center overflow-visible">
@@ -230,7 +230,7 @@ export const About: React.FC = () => {
       <FadeSection direction="up" delay={0.6} className="mt-16 flex flex-col sm:flex-row gap-6 w-full max-w-2xl">
         <MiniSocialCard
           id="github-stats-bottom"
-          icon="/assets/github-142-svgrepo-com.svg"
+          icon={import.meta.env.BASE_URL + "assets/github-142-svgrepo-com.svg"}
           label="GitHub"
           subtext="1000+ Contributions"
           link="https://github.com/lightning4747"
@@ -238,7 +238,7 @@ export const About: React.FC = () => {
         />
         <MiniSocialCard
           id="leetcode-stats-bottom"
-          icon="/assets/leetcode.svg"
+          icon={import.meta.env.BASE_URL + "assets/leetcode.svg"}
           label="LeetCode"
           subtext="300+ Solved"
           link="https://leetcode.com/u/lightning47/"

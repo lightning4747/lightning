@@ -17,7 +17,7 @@ const SPOTLIGHT_PROJECTS = [
     techStack: "REACT.JS, NODE.JS, Puter",
     github: "https://github.com/lightning4747/Stateless",
     link: "https://puter.com/app/stateless",
-    image: "public/assets/projects/sateless.png",
+    image: import.meta.env.BASE_URL + "assets/projects/sateless.png",
     accent: "#E8645A",
   },
   {
@@ -25,7 +25,7 @@ const SPOTLIGHT_PROJECTS = [
     desc: "A specialized video processing application built for precision editing and performance-optimized rendering workflows.",
     techStack: "Serverless, NODE.JS, REACT.JS",
     github: "https://github.com/lightning4747/The-Final-Cut",
-    image: "public/assets/projects/final-cut-preview.png",
+    image: import.meta.env.BASE_URL + "assets/projects/final-cut-preview.png",
     accent: "#5DBE89",
   },
   {
@@ -33,7 +33,7 @@ const SPOTLIGHT_PROJECTS = [
     desc: "Semi-Supervised Classification with Graph Convolutional Networks (GCN).",
     techStack: "PYTHON, PYTORCH, GEOMETRIC",
     github: "https://github.com/lightning4747",
-    image: "public/assets/projects/gnn-research.png",
+    image: import.meta.env.BASE_URL + "assets/projects/gnn-research.png",
     accent: "#F5C842",
   },
 ];

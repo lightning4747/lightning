@@ -66,7 +66,7 @@ export const ParticlePortrait: React.FC = () => {
 
     const img = new Image();
     img.crossOrigin = "Anonymous";
-    img.src = "/assets/no-background.jpeg"; 
+    img.src = import.meta.env.BASE_URL + "assets/no-background.jpeg"; 
 
     img.onload = () => {
       const offscreen = document.createElement("canvas");
