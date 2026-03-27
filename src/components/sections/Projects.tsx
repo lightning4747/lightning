@@ -177,7 +177,7 @@ const ProjectGridItem = ({ project, isDarkMode, index }: any) => {
       >
 <div 
   className="absolute -inset-[2px] rounded-[26px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md -z-10 animate-conic-spin"
-  style={{ background: `conic-gradient(from 0deg, ${LIGHT_PALETTE.join(', ')})` }}
+  style={{ background: conicGradient }}
 />
 
         <BorderGlow
