@@ -426,9 +426,6 @@ export const Skills: React.FC = () => {
           </div>
         </div>
       </div>
-      <FadeSection direction="down" delay={0.2} className="w-full text-left"> 
-            
-      </FadeSection>
       <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-10 auto-rows-[220px] mb-20 overflow-visible">
         <BentoCard id="stack-backend" className="md:col-span-8" isDarkMode={isDarkMode} delay={0.1}>
           <HighlightedText

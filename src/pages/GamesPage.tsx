@@ -200,7 +200,7 @@ export const GamesPage = () => {
           <p className="font-mono text-xs tracking-[0.4em] uppercase text-accent-primary mb-3">Easter Egg · /games</p>
           <h1 className="font-display text-6xl md:text-8xl uppercase leading-[0.9] tracking-tighter text-text-primary">
             My<br />
-            <span className="text-text-secondary opacity-30">Kills</span>
+            <span className="text-text-secondary opacity-30">achievements</span>
           </h1>
           <p className="mt-6 text-text-secondary font-sans text-base max-w-md leading-relaxed">
             Games aren't entertainment. They're systems — and I study every seam until they break.
