@@ -399,7 +399,7 @@ export const Skills: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="py-32 px-6 md:px-10 max-w-6xl mx-auto min-h-screen flex flex-col items-center overflow-visible">
+    <section id="skills" className="pt-12 pb-12 px-6 md:px-10 max-w-6xl mx-auto min-h-screen flex flex-col items-center overflow-visible">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
       <FadeSection direction="down" delay={0.2} className="w-full text-left">
         <div className="section-header mb-16">
@@ -426,7 +426,9 @@ export const Skills: React.FC = () => {
           </div>
         </div>
       </div>
-
+      <FadeSection direction="down" delay={0.2} className="w-full text-left"> 
+            
+      </FadeSection>
       <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-10 auto-rows-[220px] mb-20 overflow-visible">
         <BentoCard id="stack-backend" className="md:col-span-8" isDarkMode={isDarkMode} delay={0.1}>
           <HighlightedText

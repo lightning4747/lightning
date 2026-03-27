@@ -24,7 +24,7 @@ const EXPERIENCE_DATA: ExperienceItem[] = [
   },
 ];
 
-const LIGHT_PALETTE = ['#E8645A', '#F5C842', '#5B9CF6', '#5DBE89'];
+
 
 export const Experience: React.FC = () => {
   const { theme } = useTheme();
@@ -34,7 +34,7 @@ export const Experience: React.FC = () => {
   const activeJob = EXPERIENCE_DATA[activeIndex];
 
   return (
-    <section id="experience" className="py-24 px-6 md:px-10 max-w-5xl mx-auto min-h-[80vh] flex flex-col justify-center overflow-visible">
+    <section id="experience" className="max-w-5xl mx-auto min-h-[70vh] flex flex-col justify-center overflow-visible">
       <FadeSection direction="down" delay={0.2} className="w-full text-left">
         <div className="section-header mb-16">
           <span className={`text-4xl font-mono font-bold tracking-tighter ${isDarkMode ? "text-accent-primary" : "text-blue-500"}`}>
@@ -48,8 +48,6 @@ export const Experience: React.FC = () => {
         <div className="flex flex-row md:flex-col overflow-x-auto md:overflow-x-visible no-scrollbar pb-4 md:pb-0 md:border-l border-slate-200/20">
           {EXPERIENCE_DATA.map((job, i) => {
             const isActive = activeIndex === i;
-            const accentColor = LIGHT_PALETTE[i % LIGHT_PALETTE.length];
-
             return (
               <button
                 key={job.company}

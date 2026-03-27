@@ -14,25 +14,25 @@
 ## 2. Core UI Component Library
 - [x] `BorderGlowCard`: Container with animated rotating glow border
 - [x] `FadeSection`: Framer Motion intersection observer wrapper
-- [ ] `ParallaxLayer`: Scroll-linked transform component
-- [ ] `AuraBackground`: Drifting radial gradient blobs (context-aware)
-- [ ] `ClickSpark`: Global canvas-based click burst effect
+- [x] `ParallaxLayer`: Scroll-linked transform component
+- [x] `AuraBackground`: Drifting radial gradient blobs (context-aware)
+- [x] `ClickSpark`: Global canvas-based click burst effect
 
 ## 3. Sections & Content
-- [ ] **Hero Section**: Layout, word-by-word text animation, particle portrait integration
-- [ ] **About Section**: Two-column layout, bio text, fractal tree integration
-- [ ] **Skills Section**: Staggered floating tag cloud by category
-- [ ] **Experience Section**: Vertical timeline with scroll-drawn line & pulse nodes
-- [ ] **Projects Section**: 3D Rotating Cube with focus logic & detail panel
-- [ ] **Contact Section**: Formspree integration & atmospheric aura peak
+- [x] **Hero Section**: Layout, word-by-word text animation, particle portrait integration
+- [x] **About Section**: Two-column layout, bio text, fractal tree integration
+- [x] **Skills Section**: Staggered floating tag cloud by category
+- [x] **Experience Section**: Vertical timeline with scroll-drawn line & pulse nodes
+- [x] **Projects Section**: 3D Rotating Cube with focus logic & detail panel
+- [x] **Contact Section**: Formspree integration & atmospheric aura peak
 
 ## 4. Complex System Components
-- [ ] `ParticlePortrait`: Raw Canvas API — photo to particles + hover interaction
-- [ ] `FractalTree`: Recursive branch animation (p5.js or SVG)
-- [ ] `RotatingCube`: React Three Fiber cube with 6 HTML project faces
+- [x] `ParticlePortrait`: Raw Canvas API — photo to particles + hover interaction
+- [x] `FractalTree`: Recursive branch animation (p5.js or SVG)
+- [x] `RotatingCube`: React Three Fiber cube with 6 HTML project faces
 
 ## 5. Final Polish & Performance
-- [ ] Refine ClickSpark / Ripple physics
-- [ ] Smooth theme variable transitions (300ms)
-- [ ] Responsive audit (Mobile fallbacks for R3F/Particles)
-- [ ] Performance audit + `React.lazy` / `Suspense` implementation
+- [x] Refine ClickSpark / Ripple physics
+- [x] Smooth theme variable transitions (300ms)
+- [x] Responsive audit (Mobile fallbacks for R3F/Particles)
+- [x] Performance audit + `React.lazy` / `Suspense` implementation

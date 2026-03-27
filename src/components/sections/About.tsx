@@ -196,9 +196,9 @@ export const About: React.FC = () => {
               where I architect scalable backend systems and optimize high-performance cloud infrastructure.
             </p>
             <p className="text-lg leading-relaxed">
-              When I’m not deep in a terminal, I’m usually exploring <b>Machine Learning</b>—diving into different concepts,
-              techniques, and building models across various domains. Outside of code,
-              I’m into physics and play way too many Souls games.
+              When I’m not building distributed systems, 
+              I’m usually deep in <b>Machine Learning</b> research or studying <b>particle physics</b>. 
+              Outside of code, I spend way too much time playing Souls games
             </p>
             <div className="pt-4">
               <p className={`mb-4 font-mono text-sm tracking-tight ${isDarkMode ? "text-accent-primary" : "text-blue-600"}`}>

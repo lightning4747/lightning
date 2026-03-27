@@ -1,10 +1,8 @@
 import { useLayoutEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useTheme } from './hooks/useTheme';
 import { Navbar } from './components/layout/Navbar';
 import ClickSpark from './components/ui/ClickSpark';
 import { Hero } from './components/sections/Hero';
-import { FadeSection } from './components/ui/FadeSection';
 import { GamesPage } from './pages/GamesPage';
 import { BooksPage } from './pages/BooksPage';
 
@@ -14,6 +12,7 @@ import { Experience } from './components/sections/Experience';
 import { Projects } from './components/sections/Projects';
 import { Contact } from './components/sections/Contact';
 import { SocialSidebar } from './components/ui/SocialSidebar';
+import { SectionNavigator } from './components/ui/SectionNavigator';
 
 // Disable browser scroll restoration at module level, before any React render.
 if ('scrollRestoration' in window.history) {
@@ -21,7 +20,6 @@ if ('scrollRestoration' in window.history) {
 }
 
 function MainPage() {
-  const { theme } = useTheme();
 
   useLayoutEffect(() => {
     // Synchronously scroll to top before the browser paints — prevents
@@ -33,20 +31,12 @@ function MainPage() {
     <div className="flex flex-col w-full relative">
       <Navbar />
       <SocialSidebar />
+      <SectionNavigator />
       <Hero />
-
-      {/* About Section */}
       <About />
-
-      {/* Skills Section */}
       <Skills />
-
-      {/* Experience Section */}
       <Experience />
-
-      {/* Projects Section */}
       <Projects />
-
       <Contact />
     </div>
   );

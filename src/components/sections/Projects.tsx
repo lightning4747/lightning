@@ -1,7 +1,9 @@
-import React, { useRef, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import LaunchIcon from '@mui/icons-material/Launch';
 import FolderOpenRoundedIcon from '@mui/icons-material/FolderOpenRounded';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useTheme } from "../../hooks/useTheme";
 import { FadeSection } from "../ui/FadeSection";
 import BorderGlow from "../ui/BorderGlow";
@@ -96,53 +98,58 @@ const ExternalLinks = ({ link, isDarkMode }: any) => (
 );
 
 const FeaturedCard = ({ project, isDarkMode }: any) => {
-  const isFinalCut = project.title.includes("The Final Cut");
-  const isGCN = project.title.includes("Convolutional Neural Network");
-
-  // Style overrides for specific projects
-  const titleColor = isFinalCut ? "#eb79ffff" /* Bright pink */ : (isGCN ? "#fa7070ff" /* Lite Red */ : undefined);
-  const textOverride = (isFinalCut || isGCN) ? "text-white" : undefined;
+  // 1. Create a variable to check if the current project is Stateless
+  const isStateless = project.title === "Stateless";
 
   return (
     <a 
       href={project.github}
       target="_blank"
       rel="noopener noreferrer"
-      className="block relative w-full h-full rounded-[40px] overflow-hidden group shadow-2xl cursor-pointer"
+      className="block relative w-full h-full overflow-hidden group shadow-2xl cursor-pointer"
     >
       <img
         src={project.image}
         alt={project.title}
-        className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:brightness-125"
-        style={{ opacity: isDarkMode ? 0.8 : 1.0 }} 
-      />
-      <div
-        className={`absolute inset-0 transition-opacity duration-500
-          ${isDarkMode
-            ? "bg-gradient-to-t from-[#141414]/90 via-[#141414]/20 via-40% to-transparent"
-            : "bg-gradient-to-t from-white/60 via-white/5 via-30% to-transparent"}`}
+        className="absolute inset-0 w-full h-full object-cover shadow-inner"
+        style={{ opacity: 1 }} 
       />
 
-      {/* Dark overlay for specific high-brightness projects to ensure text pop if not in dark mode manually */}
-      {(isFinalCut || isGCN) && !isDarkMode && (
-        <div className="absolute inset-0 bg-black/20" />
+      {!isStateless && (
+        <>
+          <div className="absolute inset-0 bg-black/40 transition-opacity duration-500 group-hover:bg-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        </>
       )}
+      
+      <div className="absolute inset-0 border border-white/10 rounded-[inherit] pointer-events-none" />
 
-      <div className="absolute inset-0 border-[1.5px] border-white/10 rounded-[40px] pointer-events-none" />
-
-      <div className="absolute bottom-12 left-12 right-12 z-10 pointer-events-none">
-        <span className="font-mono text-[10px] tracking-[0.4em] uppercase mb-4 block" style={{ color: project.accent }}>
-          {project.techStack}
-        </span>
-        <h3 className="text-4xl md:text-6xl font-display font-bold tracking-tighter mb-2"
-          style={{ color: titleColor || (isDarkMode ? "#f1f5f9" : "#0f172a") }}
-        >
-          {project.title}
-        </h3>
-        <p className={`text-lg max-w-2xl mb-8 leading-relaxed ${textOverride || (isDarkMode ? "text-slate-200" : "text-slate-700")} drop-shadow-lg`}>
-          {project.desc}
-        </p>
-        <ExternalLinks link={project.link} isDarkMode={isDarkMode} />
+      <div className="absolute bottom-8 left-8 right-8 md:bottom-12 md:left-12 md:right-12 z-10 pointer-events-none">
+        <div className="flex flex-col gap-1 md:gap-2">
+          
+          {/* Tech Stack: Swap to black text and remove the accent color if it's Stateless */}
+          <span 
+            className={`font-mono text-[9px] md:text-[11px] tracking-[0.4em] uppercase font-bold ${isStateless ? 'text-black' : 'text-white/80'}`} 
+            style={isStateless ? {} : { color: project.accent }}
+          >
+            {project.techStack}
+          </span>
+          
+          {/* Title: Swapped to black text if Stateless */}
+          <h3 className={`text-2xl md:text-4xl lg:text-5xl font-display font-black tracking-tight mb-1 ${isStateless ? 'text-black' : 'text-white'}`}>
+            {project.title}
+          </h3>
+          
+          {/* Description: Swapped to black text if Stateless, removing the drop-shadow as well */}
+          <p className={`text-xs md:text-base max-w-xl line-clamp-2 md:line-clamp-none font-bold leading-relaxed ${isStateless ? 'text-black' : 'text-white/90 drop-shadow-md'}`}>
+            {project.desc}
+          </p>
+          
+          <div className="mt-3">
+             {/* Passed !isStateless to flip the icon color to dark if the text is black */}
+            <ExternalLinks link={project.link} isDarkMode={!isStateless} />
+          </div>
+        </div>
       </div>
     </a>
   );
@@ -212,99 +219,111 @@ const ProjectGridItem = ({ project, isDarkMode, index }: any) => {
 export const Projects: React.FC = () => {
   const { theme } = useTheme();
   const isDarkMode = theme === "dark";
-  const containerRef = useRef<HTMLDivElement>(null);
-  const spotlightRef = useRef<HTMLDivElement>(null);
-
   const [currentFeatured, setCurrentFeatured] = useState(0);
-  const [spotlightProgress, setSpotlightProgress] = useState(0);
+  const [direction, setDirection] = useState(0); // -1 for left, 1 for right
 
+  const nextProject = () => {
+    setDirection(1);
+    setCurrentFeatured((prev) => (prev + 1) % SPOTLIGHT_PROJECTS.length);
+  };
+
+  const prevProject = () => {
+    setDirection(-1);
+    setCurrentFeatured((prev) => (prev - 1 + SPOTLIGHT_PROJECTS.length) % SPOTLIGHT_PROJECTS.length);
+  };
+
+  // Auto-play (optional, but nice for a carousel)
   useEffect(() => {
-    const handleScroll = () => {
-      if (!spotlightRef.current) return;
-      const rect = spotlightRef.current.getBoundingClientRect();
-      const spotlightHeight = spotlightRef.current.offsetHeight - window.innerHeight;
-
-      // Calculate progress specifically within the spotlight container
-      const progress = Math.max(0, Math.min(1, -rect.top / spotlightHeight));
-      setSpotlightProgress(progress);
-
-      // Map progress to active spotlight index (starting immediately)
-      const step = 1 / SPOTLIGHT_PROJECTS.length;
-      const index = Math.min(Math.floor(progress / step), SPOTLIGHT_PROJECTS.length - 1);
-      setCurrentFeatured(index);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const timer = setInterval(nextProject, 8000);
+    return () => clearInterval(timer);
   }, []);
 
+  const variants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? "100%" : "-100%",
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+    },
+    exit: (direction: number) => ({
+      zIndex: 0,
+      x: direction < 0 ? "100%" : "-100%",
+    }),
+  };
+
   return (
-    <div ref={containerRef} id="projects" className="relative">
-
-      {/* ─── PHASE 1: SPOTLIGHT ─── */}
-      <div
-        ref={spotlightRef}
-        className="relative"
-        style={{ height: "350vh" }}
-      >
-        <div className="sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden">
-
-          {/* Section Heading */}
-          <div className="w-full max-w-7xl pt-16 px-6 md:px-20 z-50">
-            <FadeSection direction="down" delay={0.2} className="w-full text-left">
-              <div className="section-header mb-16">
-                <span className={`text-4xl font-mono font-bold tracking-tighter ${isDarkMode ? "text-accent-primary" : "text-blue-500"}`}>
-                  / Pet projects
-                </span>
-              </div>
-            </FadeSection>
+    <div id="projects" className="relative py-20">
+      
+      {/* ─── PHASE 1: SPOTLIGHT CAROUSEL ─── */}
+      <div className="max-w-5xl mx-auto px-6 mb-12">
+        <FadeSection direction="down" delay={0.2}>
+          <div className="section-header mb-12">
+            <span className={`text-4xl font-mono font-bold tracking-tighter ${isDarkMode ? "text-accent-primary" : "text-blue-500"}`}>
+              / Pet projects
+            </span>
           </div>
+        </FadeSection>
 
-          {/* Cards */}
-          <div className="relative w-full max-w-7xl h-[65vh] px-6 mt-8 z-10">
-            <motion.div
-              className="w-full h-full"
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: false, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
-            >
-              {SPOTLIGHT_PROJECTS.map((project, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute inset-0"
-                  style={{ zIndex: i === currentFeatured ? 10 : 0 }}
-                  initial={false}
-                  animate={{
-                    opacity: i === currentFeatured ? (i === SPOTLIGHT_PROJECTS.length - 1 && spotlightProgress > 0.95 ? 1 - (spotlightProgress - 0.95) * 20 : 1) : 0,
-                    x: i === currentFeatured ? 0 : (i < currentFeatured ? -200 : 200),
-                    filter: i === currentFeatured ? "blur(0px)" : "blur(40px)",
-                    scale: i === currentFeatured ? 1 : 0.9
-                  }}
-                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <FeaturedCard project={project} isDarkMode={isDarkMode} />
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* Indicators */}
-          <div
-            className="absolute right-10 top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-4 z-50 transition-opacity duration-300"
-            style={{ opacity: spotlightProgress > 0.95 ? 0 : 1 }}
-          >
-            {SPOTLIGHT_PROJECTS.map((_, i) => (
-              <div
-                key={i}
-                className="w-1 transition-all duration-500"
-                style={{
-                  height: i === currentFeatured ? "40px" : "12px",
-                  backgroundColor: i === currentFeatured
-                    ? (isDarkMode ? "var(--accent-primary)" : "var(--accent-blue)")
-                    : (isDarkMode ? "#ffffff22" : "#00000011"),
-                  borderRadius: "2px"
+        <div className="relative group">
+          {/* Carousel Container */}
+          <div className="relative h-[55vh] md:h-[60vh] overflow-hidden rounded-[40px]">
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.div
+                key={currentFeatured}
+                custom={direction}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  x: { type: "tween", duration: 0.6, ease: [0.25, 1, 0.5, 1] }
                 }}
+                className="absolute inset-0"
+              >
+                <FeaturedCard 
+                  project={SPOTLIGHT_PROJECTS[currentFeatured]} 
+                  isDarkMode={isDarkMode} 
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Navigation Buttons */}
+          <button
+            onClick={prevProject}
+            className={`absolute left-4 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full 
+              backdrop-blur-md border border-white/10 transition-all
+              ${isDarkMode ? "bg-black/20 hover:bg-black/40 text-white" : "bg-white/20 hover:bg-white/40 text-slate-800"}
+              opacity-0 group-hover:opacity-100 hidden md:block`}
+          >
+            <ArrowBackIosNewIcon fontSize="small" />
+          </button>
+          
+          <button
+            onClick={nextProject}
+            className={`absolute right-4 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full 
+              backdrop-blur-md border border-white/10 transition-all
+              ${isDarkMode ? "bg-black/20 hover:bg-black/40 text-white" : "bg-white/20 hover:bg-white/40 text-slate-800"}
+              opacity-0 group-hover:opacity-100 hidden md:block`}
+          >
+            <ArrowForwardIosIcon fontSize="small" />
+          </button>
+
+          {/* Dots Indicator */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-30">
+            {SPOTLIGHT_PROJECTS.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  setDirection(i > currentFeatured ? 1 : -1);
+                  setCurrentFeatured(i);
+                }}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  i === currentFeatured 
+                    ? (isDarkMode ? "w-8 bg-accent-primary" : "w-8 bg-blue-500") 
+                    : "bg-white/30"
+                }`}
               />
             ))}
           </div>
@@ -312,14 +331,15 @@ export const Projects: React.FC = () => {
       </div>
 
       {/* ─── PHASE 2: ARCHIVE GRID ─── */}
-      <div className="relative z-50 py-32 px-6 md:px-20 max-w-7xl mx-auto -mt-[15vh]">
-        <div className="mb-16">
-
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-32">
+      <div className="max-w-7xl mx-auto px-6 md:px-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {OTHER_PROJECTS.map((project, index) => (
-            <ProjectGridItem key={index} project={project} isDarkMode={isDarkMode} index={index} />
+            <ProjectGridItem 
+              key={index} 
+              project={project} 
+              isDarkMode={isDarkMode} 
+              index={index} 
+            />
           ))}
         </div>
       </div>
