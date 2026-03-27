@@ -346,20 +346,20 @@ export const Skills: React.FC = () => {
       hoverStates.current[i] += (target - hoverStates.current[i]) * 0.15;
       const h = hoverStates.current[i];
 
-      const frontDepth    = Math.max(0, (pd.scale - minScale) / (maxScale - minScale));
-      const visThreshold  = 0.45;
-      const adjDepth      = Math.max(0, (frontDepth - visThreshold) / (1 - visThreshold));
+      const visThreshold  = 0.0;
+      const frontDepth = Math.max(0, (pd.scale - minScale) / (maxScale - minScale));
+      const adjDepth = Math.max(0, (frontDepth - visThreshold) / (1 - visThreshold));
 
       const depth        = (pd.scale * (GLOBE_FOV + SKILL_RADIUS) - GLOBE_FOV + SKILL_RADIUS) / (SKILL_RADIUS * 2);
       const baseScale    = 0.5 + depth * 0.5;
       const currentScale = baseScale * (1 + h * 0.3);
-      const opacity      = (adjDepth ** 1.8) * (1 - h) + h;
+      const opacity = (adjDepth ** 1.0) * (1 - h) + h;
 
       /* Batch style writes — single reflow per tag per frame */
       tag.style.left        = `${pd.sx}px`;
       tag.style.top         = `${pd.sy}px`;
       tag.style.transform   = `translate(-50%,-50%) scale(${currentScale.toFixed(3)}) rotate(${(h * -5).toFixed(1)}deg)`;
-      tag.style.opacity     = opacity.toFixed(3);
+      tag.style.opacity = opacity.toFixed(3);
       tag.style.zIndex      = (Math.round((pd.scale - 1) * 1000 + 1000) + (h > 0.1 ? 5000 : 0)).toString();
       tag.style.pointerEvents = adjDepth > 0.1 ? "auto" : "none";
       tag.style.visibility    = adjDepth > 0.01 ? "visible" : "hidden";

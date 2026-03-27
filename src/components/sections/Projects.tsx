@@ -97,23 +97,22 @@ const ExternalLinks = ({ link, isDarkMode }: any) => (
   </div>
 );
 
-const FeaturedCard = ({ project, isDarkMode }: any) => {
-  // 1. Create a variable to check if the current project is Stateless
+const FeaturedCard = ({ project }: any) => {
+
   const isStateless = project.title === "Stateless";
 
   return (
-    <a 
-      href={project.github}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block relative w-full h-full overflow-hidden group shadow-2xl cursor-pointer"
-    >
-      <img
-        src={project.image}
-        alt={project.title}
-        className="absolute inset-0 w-full h-full object-cover shadow-inner"
-        style={{ opacity: 1 }} 
+    <div className="block relative w-full h-full overflow-hidden group shadow-2xl">
+
+      <a 
+        href={project.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute inset-0 z-10" // Covers the whole card
+        aria-label={`View ${project.title} on GitHub`}
       />
+
+<img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover" />
 
       {!isStateless && (
         <>
@@ -151,7 +150,8 @@ const FeaturedCard = ({ project, isDarkMode }: any) => {
           </div>
         </div>
       </div>
-    </a>
+</div>
+    
   );
 };
 
@@ -175,14 +175,10 @@ const ProjectGridItem = ({ project, isDarkMode, index }: any) => {
         rel="noopener noreferrer"
         className="block h-full group relative cursor-pointer"
       >
-        <div 
-          className="absolute -inset-[2px] rounded-[26px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md -z-10"
-          style={{ background: conicGradient }}
-        />
-        <div 
-          className="absolute -inset-[1px] rounded-[25px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-[1px] -z-10"
-          style={{ background: conicGradient }}
-        />
+<div 
+  className="absolute -inset-[2px] rounded-[26px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md -z-10 animate-conic-spin"
+  style={{ background: `conic-gradient(from 0deg, ${LIGHT_PALETTE.join(', ')})` }}
+/>
 
         <BorderGlow
           borderRadius={24}
@@ -279,6 +275,7 @@ export const Projects: React.FC = () => {
                 transition={{
                   x: { type: "tween", duration: 0.6, ease: [0.25, 1, 0.5, 1] }
                 }}
+                style={{ willChange: "transform" }} 
                 className="absolute inset-0"
               >
                 <FeaturedCard 
