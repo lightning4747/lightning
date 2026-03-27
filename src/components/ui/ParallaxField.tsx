@@ -15,27 +15,27 @@ interface FloatingObject {
 const objects: FloatingObject[] = [
   { 
     id: 'katana',   
-    src: '/assets/sword-removebg-preview.png', 
+    src: import.meta.env.BASE_URL + 'assets/sword-removebg-preview.png', 
     isImage: true, 
     depth: 0.6, 
-    href: '/games', 
+    href: import.meta.env.BASE_URL + 'games', 
     position: { top: '15%', left: '15%' }, 
     rotation: -18, 
     size: 210 
   },
   { 
     id: 'book',     
-    src: '/assets/Book_in_heraldry_svg_element.svg', 
+    src: import.meta.env.BASE_URL + 'assets/Book_in_heraldry_svg_element.svg', 
     isImage: false, 
     depth: 0.35, 
-    href: '/books', 
+    href: import.meta.env.BASE_URL + 'books', 
     position: { top: '72%', left: '72%' }, 
     rotation: 12, 
     size: 65 
   },
   { 
     id: 'leetcode', 
-    src: '/assets/leetcode.svg', 
+    src: import.meta.env.BASE_URL + 'assets/leetcode.svg', 
     isImage: false, 
     depth: 0.5, 
     href: 'https://leetcode.com/u/lightning47/', 
@@ -45,7 +45,7 @@ const objects: FloatingObject[] = [
   },
   { 
     id: 'github',   
-    src: '/assets/github-142-svgrepo-com.svg', 
+    src: import.meta.env.BASE_URL + 'assets/github-142-svgrepo-com.svg', 
     isImage: false, 
     depth: 0.45, 
     href: 'https://github.com/lightning4747', 
@@ -55,7 +55,7 @@ const objects: FloatingObject[] = [
   },
   { 
     id: 'email',    
-    src: '/assets/Gmail_icon_(2020).svg', 
+    src: import.meta.env.BASE_URL + 'assets/Gmail_icon_(2020).svg', 
     isImage: true, 
     depth: 0.25, 
     href: 'mailto:vignesh112847@gmail.com', 

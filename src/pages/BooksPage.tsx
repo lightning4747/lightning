@@ -33,7 +33,7 @@ export const BooksPage = () => {
     <div className="min-h-screen bg-bg-primary text-text-primary font-sans">
       {/* Back nav */}
       <motion.a
-        href="/"
+        href={import.meta.env.BASE_URL}
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         className="fixed top-8 left-8 z-50 font-mono text-xs tracking-widest uppercase text-text-secondary hover:text-text-primary transition-colors duration-200 flex items-center gap-2 group"
