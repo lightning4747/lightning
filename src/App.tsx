@@ -1,5 +1,5 @@
 import { useLayoutEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import ClickSpark from './components/ui/ClickSpark';
 import { Hero } from './components/sections/Hero';
@@ -44,7 +44,7 @@ function MainPage() {
 
 function App() {
   return (
-    <BrowserRouter basename="/lightning">
+    <HashRouter>
       <ClickSpark sparkColor="random" sparkSize={17} sparkRadius={15} sparkCount={8} duration={400}>
         <Routes>
           <Route path="/" element={<MainPage />} />
@@ -52,7 +52,7 @@ function App() {
           <Route path="/books" element={<BooksPage />} />
         </Routes>
       </ClickSpark>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

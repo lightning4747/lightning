@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { useTheme } from '../../hooks/useTheme';
+import { Link } from 'react-router-dom';
 
 interface FloatingObject {
   id: string;
@@ -138,31 +139,57 @@ export const ParallaxField = () => {
             willChange: 'transform'
           }}
         >
-          <a
-            href={obj.href}
-            target={obj.href.startsWith('http') ? '_blank' : undefined}
-            rel={obj.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-            className="block p-4"
-          >
-            <div 
-              ref={(el) => { innerRefs.current[obj.id] = el; }}
-              className="transition-all duration-300 ease-out flex items-center justify-center cursor-pointer"
-              style={{ 
-                width: obj.size,
-                height: 'auto',
-                opacity: 0.35,
-                filter: 'grayscale(100%)',
-                willChange: 'opacity, transform, filter'
-              }}
+          {obj.href.startsWith('http') || obj.href.startsWith('mailto') ? (
+            <a
+              href={obj.href}
+              target={obj.href.startsWith('http') ? '_blank' : undefined}
+              rel={obj.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              className="block p-4"
             >
-              <img 
-                src={obj.src} 
-                alt={obj.id} 
-                className="w-full h-auto object-contain"
-                draggable={false}
-              />
-            </div>
-          </a>
+              <div 
+                ref={(el) => { innerRefs.current[obj.id] = el; }}
+                className="transition-all duration-300 ease-out flex items-center justify-center cursor-pointer"
+                style={{ 
+                  width: obj.size,
+                  height: 'auto',
+                  opacity: 0.35,
+                  filter: 'grayscale(100%)',
+                  willChange: 'opacity, transform, filter'
+                }}
+              >
+                <img 
+                  src={obj.src} 
+                  alt={obj.id} 
+                  className="w-full h-auto object-contain"
+                  draggable={false}
+                />
+              </div>
+            </a>
+          ) : (
+            <Link
+              to={obj.href.replace(import.meta.env.BASE_URL, '/')}
+              className="block p-4"
+            >
+              <div 
+                ref={(el) => { innerRefs.current[obj.id] = el; }}
+                className="transition-all duration-300 ease-out flex items-center justify-center cursor-pointer"
+                style={{ 
+                  width: obj.size,
+                  height: 'auto',
+                  opacity: 0.35,
+                  filter: 'grayscale(100%)',
+                  willChange: 'opacity, transform, filter'
+                }}
+              >
+                <img 
+                  src={obj.src} 
+                  alt={obj.id} 
+                  className="w-full h-auto object-contain"
+                  draggable={false}
+                />
+              </div>
+            </Link>
+          )}
         </div>
       ))}
     </div>

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 interface Book {
   title: string;
@@ -29,18 +30,19 @@ const ITEM = {
 };
 
 export const BooksPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-bg-primary text-text-primary font-sans">
       {/* Back nav */}
-      <motion.a
-        href={import.meta.env.BASE_URL}
+      <motion.button
+        onClick={() => navigate('/')}
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         className="fixed top-8 left-8 z-50 font-mono text-xs tracking-widest uppercase text-text-secondary hover:text-text-primary transition-colors duration-200 flex items-center gap-2 group"
       >
         <span className="group-hover:-translate-x-1 transition-transform duration-200">←</span>
         Back
-      </motion.a>
+      </motion.button>
 
       <div className="max-w-3xl mx-auto px-6 pt-32 pb-24">
         {/* Title */}
