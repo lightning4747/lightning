@@ -19,7 +19,7 @@ const MiniSocialCard = ({ icon, label, subtext, link, isDarkMode }: any) => {
 
   const conicGradient = `conic-gradient(from ${rotation}deg, ${LIGHT_PALETTE[0]}, ${LIGHT_PALETTE[1]}, ${LIGHT_PALETTE[2]}, ${LIGHT_PALETTE[3]}, ${LIGHT_PALETTE[0]})`;
 
-  const CardInterior = () => (
+  const cardInteriorContent = (
     <div className="flex items-center gap-4 p-4 relative z-10 h-full">
       <div className="w-10 h-10 shrink-0 flex items-center justify-center p-1 bg-white/5 rounded-lg overflow-hidden">
         <img src={icon} alt={label} className="w-full h-full object-contain" />
@@ -55,7 +55,7 @@ const MiniSocialCard = ({ icon, label, subtext, link, isDarkMode }: any) => {
           edgeSensitivity={20}
           className="h-full"
         >
-          <CardInterior />
+          {cardInteriorContent}
         </BorderGlow>
       ) : (
         <div className="relative h-full w-full rounded-2xl overflow-visible">
@@ -64,7 +64,7 @@ const MiniSocialCard = ({ icon, label, subtext, link, isDarkMode }: any) => {
             style={{ background: conicGradient }}
           />
           <div className="h-full w-full rounded-2xl bg-white border border-slate-100 shadow-md shadow-slate-200/50 relative overflow-hidden">
-            <CardInterior />
+            {cardInteriorContent}
           </div>
         </div>
       )}
