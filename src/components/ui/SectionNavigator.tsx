@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate, useLocation } from 'react-router-dom';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
@@ -21,6 +22,8 @@ export const SectionNavigator: React.FC = () => {
   const { theme } = useTheme();
   const isDarkMode = theme === 'dark';
   const [activeSection, setActiveSection] = useState('hero');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -41,6 +44,10 @@ export const SectionNavigator: React.FC = () => {
   }, []);
 
   const scrollToSection = (id: string) => {
+    if (location.pathname !== '/') {
+      navigate('/', { state: { scrollTo: id } });
+      return;
+    }
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 

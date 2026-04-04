@@ -1,5 +1,5 @@
-import { useLayoutEffect } from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { useLayoutEffect, useEffect } from 'react';
+import { HashRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import ClickSpark from './components/ui/ClickSpark';
 import { Hero } from './components/sections/Hero';
@@ -20,18 +20,34 @@ if ('scrollRestoration' in window.history) {
 }
 
 function MainPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useLayoutEffect(() => {
-    // Synchronously scroll to top before the browser paints — prevents
-    // the browser's scroll restoration from jumping to Skills section on reload.
-    window.scrollTo(0, 0);
-  }, []);
+    // Scroll to top on direct reload ONLY if no specific scroll section is requested
+    if (!location.state?.scrollTo) {
+      window.scrollTo(0, 0);
+    }
+  }, [location.state?.scrollTo]);
+
+  useEffect(() => {
+    if (location.state?.scrollTo) {
+      const targetId = location.state.scrollTo;
+      // Small timeout to ensure DOM is fully rendered
+      const timer = setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+          // Clear history state so refresh doesn't trigger scroll again
+          navigate(location.pathname, { replace: true, state: {} });
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state, navigate, location.pathname]);
 
   return (
     <div className="flex flex-col w-full relative">
-      <Navbar />
-      <SocialSidebar />
-      <SectionNavigator />
       <Hero />
       <About />
       <Skills />
@@ -46,11 +62,16 @@ function App() {
   return (
     <HashRouter>
       <ClickSpark sparkColor="random" sparkSize={17} sparkRadius={15} sparkCount={8} duration={400}>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/games" element={<GamesPage />} />
-          <Route path="/books" element={<BooksPage />} />
-        </Routes>
+        <div className="flex flex-col w-full relative">
+          <Navbar />
+          <SocialSidebar />
+          <SectionNavigator />
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/games" element={<GamesPage />} />
+            <Route path="/books" element={<BooksPage />} />
+          </Routes>
+        </div>
       </ClickSpark>
     </HashRouter>
   );

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll } from 'framer-motion';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ThemeToggle } from '../ui/ThemeToggle';
 
 const navLinks = [
@@ -16,6 +17,8 @@ export const Navbar = () => {
   const { scrollY } = useScroll();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isLogoClicked, setIsLogoClicked] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
  
   useEffect(() => {
     return scrollY.onChange((latest) => {
@@ -26,6 +29,28 @@ export const Navbar = () => {
   const handleLogoClick = () => {
     setIsLogoClicked(true);
     setTimeout(() => setIsLogoClicked(false), 1000); // 1s flash effect
+    if (location.pathname !== '/') {
+      navigate('/');
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const scrollToSection = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    const sectionId = id.replace('#', '');
+
+    if (location.pathname !== '/') {
+      // If not on home page, navigate to home and pass the ID
+      navigate('/', { state: { scrollTo: sectionId } });
+      // The scroll will be handled in a useEffect on the home page or via URL hash
+      return;
+    }
+
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const COLORS = ["#E8645A", "#F5C842", "#5B9CF6", "#5DBE89", "#eb79ff"];
@@ -84,6 +109,7 @@ export const Navbar = () => {
               <motion.a
                 key={link.name}
                 href={link.href}
+                onClick={(e) => scrollToSection(e, link.href)}
                 onMouseEnter={() => setHoveredIndex(i)}
                 animate={{
                   y: isHovered ? -4 : (isNeighbor ? -2 : 0),
