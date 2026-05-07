@@ -60,7 +60,7 @@ export const Hero = () => {
           {/* Portrait Container - Switches by Theme */}
           <FadeSection direction="none" delay={0.5} distance={10}>
             <div className="relative py-8 mb-4 scale-95 md:scale-100">
-               {isDarkMode ? <ParticlePortrait /> : <FractalTree />}
+               <FractalTree />
                
                {/* Premium Frame Corners */}
                <div className={`absolute top-0 left-0 w-8 h-8 border-l border-t ${isDarkMode ? "border-accent-primary" : "border-blue-500"} opacity-30 pointer-events-none`} />
