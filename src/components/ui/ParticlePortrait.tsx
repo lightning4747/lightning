@@ -64,7 +64,6 @@ export const ParticlePortrait: React.FC = () => {
 
     let animationId: number;
 
-    /*
     const img = new Image();
     img.crossOrigin = "Anonymous";
     img.src = import.meta.env.BASE_URL + "assets/no-background.jpeg"; 
@@ -143,8 +142,6 @@ export const ParticlePortrait: React.FC = () => {
       imageLoadedRef.current = true;
       startTimeRef.current = performance.now();
     };
-    */
-    imageLoadedRef.current = false; // Ensure it stays disabled
 
     const draw = () => {
       animationId = requestAnimationFrame(draw);
