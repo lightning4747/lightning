@@ -232,7 +232,7 @@ export const About: React.FC = () => {
           id="github-stats-bottom"
           icon={import.meta.env.BASE_URL + "assets/github-142-svgrepo-com.svg"}
           label="GitHub"
-          subtext="1000+ Contributions"
+          subtext="1500+ Contributions"
           link="https://github.com/lightning4747"
           isDarkMode={isDarkMode}
         />
@@ -240,7 +240,7 @@ export const About: React.FC = () => {
           id="leetcode-stats-bottom"
           icon={import.meta.env.BASE_URL + "assets/leetcode.svg"}
           label="LeetCode"
-          subtext="300+ Solved"
+          subtext="400+ Solved"
           link="https://leetcode.com/u/lightning47/"
           isDarkMode={isDarkMode}
         />

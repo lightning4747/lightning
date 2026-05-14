@@ -15,7 +15,7 @@ const EXPERIENCE_DATA: ExperienceItem[] = [
   {
     company: "EANS Technologies",
     jobTitle: "Backend Engineering Intern @",
-    duration: "FEB 2026 - PRESENT",
+    duration: "MAR 2026 - MAY 2026",
     desc: [
       "Architected and deployed a scalable backend infrastructure for a textile-industry SaaS, managing a repository of over 400,000 image assets.",
       "Optimized relational database performance and storage costs by implementing efficient PostgreSQL indexing.",

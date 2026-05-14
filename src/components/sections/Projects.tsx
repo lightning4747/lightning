@@ -58,10 +58,10 @@ const OTHER_PROJECTS = [
     github: "https://github.com/lightning4747/Luminary",
   },
   {
-    title: "University Management",
-    desc: "An enterprise-level system for managing student records, faculty schedules, and academic auditing.",
-    tech: "PostgreSQL, Node.js, React.js, Express",
-    github: "https://github.com/lightning4747/Full-scale-University-Management-System",
+    title: "Coffee Canvas",
+    desc: "A digital canvas for coffee enthusiasts to explore, create, and share their brewing artistry.",
+    tech: "NEXT.JS, TYPESCRIPT, PIXIJS, SOCKET.IO, NODE.JS, GO, GRPC, GRAPHQL, REDIS, POSTGRESQL, DOCKER",
+    github: "https://github.com/lightning4747/coffee-canvas",
   },
   {
     title: "Snake Java Edition",
