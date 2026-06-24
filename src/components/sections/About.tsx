@@ -186,19 +186,12 @@ export const About: React.FC = () => {
         <div className="flex-1 space-y-6">
           <div className={`about-description space-y-4 p-2 transition-all duration-500 
             ${isDarkMode ? "text-slate-400" : "text-slate-700"}`}>
+              <p className="text-lg leading-relaxed"> I am a student at <b>MCET</b> pursuing a 
+              <b>B.Tech in Artificial Intelligence & Data Science</b>. 
+              My interests gravitate toward backend engineering, system design,
+               and the quiet intricacies of software at scale. </p>
             <p className="text-lg leading-relaxed">
-              I am a student at <b>MCET</b> pursuing my <b>B.Tech in Artificial Intelligence & Data Science</b>.
-              Currently, I'm a <b>Software Engineer Intern</b> at
-              <a href="https://eanstall.com" target="_blank" rel="noopener noreferrer"
-                className={`mx-1 font-bold ${isDarkMode ? "text-accent-primary hover:text-white" : "text-blue-600 hover:text-blue-800"}`}>
-                EANS Technologies
-              </a>,
-              where I architect scalable backend systems and optimize high-performance cloud infrastructure.
-            </p>
-            <p className="text-lg leading-relaxed">
-              When I’m not building distributed systems, 
-              I’m usually deep in <b>Machine Learning</b> research or studying <b>particle physics</b>. 
-              Outside of code, I spend way too much time playing Souls games
+              "Outside of work, I spend a concerning amount of time playing Souls games."
             </p>
             <div className="pt-4">
               <p className={`mb-4 font-mono text-sm tracking-tight ${isDarkMode ? "text-accent-primary" : "text-blue-600"}`}>
