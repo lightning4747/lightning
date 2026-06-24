@@ -1,35 +1,40 @@
-# lightning-portfolio
+# Lightning
 
-lowkey built this. it exists (no cap). built with React, TS, and some Three.js because plain HTML is literally mid.
+A portfolio. Built with React, TypeScript, and Three.js.
 
-there's spinning things and glowing cards. if you're into that aura, cool i guess.
+## Visual Aesthetic
 
-## Screenshots (lowkey fire)
-
-| Light Theme (flashbang) | Dark Theme (smooth vibes) |
+| Light Theme | Dark Theme |
 |---|---|
 | ![LIGHT_PLACEHOLDER](public/light.png) | ![DARK_PLACEHOLDER](public/dark.png) |
 
-## The "Stack" (bet)
+Supports light and dark modes.
 
-- **React / Vite**: because waiting for builds is an absolute L.
-- **Three.js**: used math to make things rotate. don't even ask, my brain is cooked.
-- **Framer Motion**: for those jit animations.
-- **Tailwind**: because writing CSS from scratch is not it.
+## Under the Hood
 
-## Features (aura +1000)
+- React & Vite
+- Three.js
+- Framer Motion
+- Tailwind CSS
+- TypeScript
 
-- **The Sphere**: a globe of skills. you can drag it or whatever.
-- **Sticky Spots**: featured projects that stay in your face longer than they should.
-- **Contact CLI**: a fake terminal. looks hacker-ish for the gram.
-- **Logo**: i'm goated for this one. click my name, it turns colors. 
+## What's Included
 
-## Run it (if you're not busy being a NPC)
+- **Interactive Skill Sphere** — 3D representation of skills. Draggable
+- **Featured Projects** — Sticky sections with project details
+- **Contact Terminal** — CLI-style contact interface
+- **Dynamic Logo** — The header logo responds to interaction
 
-1. git clone this fr.
-2. `npm install` (rip to your node_modules).
-3. `npm run dev`
-4. go to `localhost:5173`.
-5. leave a star or don't. it's fine.
+## Easter Eggs
 
-delulu is the solulu.
+There are a few hidden elements scattered throughout. Worth exploring.
+
+## Getting Started
+
+```bash
+git clone https://github.com/lightning4747/lightning
+npm install
+npm run dev
+```
+
+Navigate to `localhost:5173`.

@@ -191,7 +191,7 @@ export const About: React.FC = () => {
               My interests gravitate toward backend engineering, system design,
                and the quiet intricacies of software at scale. </p>
             <p className="text-lg leading-relaxed">
-              "Outside of work, I spend a concerning amount of time playing Souls games."
+              Outside of work, I spend a concerning amount of time playing Souls games.
             </p>
             <div className="pt-4">
               <p className={`mb-4 font-mono text-sm tracking-tight ${isDarkMode ? "text-accent-primary" : "text-blue-600"}`}>
