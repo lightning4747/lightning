@@ -186,8 +186,8 @@ export const About: React.FC = () => {
         <div className="flex-1 space-y-6">
           <div className={`about-description space-y-4 p-2 transition-all duration-500 
             ${isDarkMode ? "text-slate-400" : "text-slate-700"}`}>
-              <p className="text-lg leading-relaxed"> I am a student at <b>MCET</b> pursuing a 
-              <b>B.Tech in Artificial Intelligence & Data Science</b>. 
+              <p className="text-lg leading-relaxed"> I am a student at <b>MCET</b> pursuing   
+              <b> B.Tech in Artificial Intelligence & Data Science</b>. 
               My interests gravitate toward backend engineering, system design,
                and the quiet intricacies of software at scale. </p>
             <p className="text-lg leading-relaxed">
@@ -225,7 +225,7 @@ export const About: React.FC = () => {
           id="github-stats-bottom"
           icon={import.meta.env.BASE_URL + "assets/github-142-svgrepo-com.svg"}
           label="GitHub"
-          subtext="1500+ Contributions"
+          subtext="2000+ Contributions"
           link="https://github.com/lightning4747"
           isDarkMode={isDarkMode}
         />
@@ -233,7 +233,7 @@ export const About: React.FC = () => {
           id="leetcode-stats-bottom"
           icon={import.meta.env.BASE_URL + "assets/leetcode.svg"}
           label="LeetCode"
-          subtext="400+ Solved"
+          subtext="500+ Solved"
           link="https://leetcode.com/u/lightning47/"
           isDarkMode={isDarkMode}
         />

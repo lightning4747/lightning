@@ -487,25 +487,25 @@ export const Skills: React.FC = () => {
       </div>
 
       {/* Bento Tech Stack Grid */}
-      <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-10 auto-rows-[220px] mb-20 overflow-visible">
+      <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-10 auto-rows-[220px] mb-30 overflow-visible">
         <BentoCard id="stack-backend" className="md:col-span-8" isDarkMode={isDarkMode} delay={0.1}>
-          <HighlightedText category="Infrastructure & Backend" tech="Node.js, Express, Python, fastify, NestJS" isDarkMode={isDarkMode} />
+          <HighlightedText category="Backend" tech="Bun, Express, Drizzle, Socket.io, GraphQl" isDarkMode={isDarkMode} />
         </BentoCard>
 
         <BentoCard id="stack-ml" className="md:col-span-4" isDarkMode={isDarkMode} delay={0.2}>
           <HighlightedText category="Machine Learning" tech="XGBoost, PyTorch, TensorFlow, LangChain" isDarkMode={isDarkMode} />
         </BentoCard>
 
-        <BentoCard id="stack-arch" className="md:col-span-4" isDarkMode={isDarkMode} delay={0.1}>
-          <HighlightedText category="Architecture" tech="AWS, Docker, Linux, Git, Terraform" isDarkMode={isDarkMode} />
+        <BentoCard id="stack-infra" className="md:col-span-4" isDarkMode={isDarkMode} delay={0.1}>
+          <HighlightedText category="DevOps & Cloud" tech="AWS, Docker, Linux, Git, Terraform" isDarkMode={isDarkMode} />
         </BentoCard>
 
         <BentoCard id="stack-data" className="md:col-span-8" isDarkMode={isDarkMode} delay={0.2}>
-          <HighlightedText category="Data Persistence" tech="PostgreSQL, MongoDB, Redis, MySQL, DynamoDB" isDarkMode={isDarkMode} />
+          <HighlightedText category="Databases" tech="PostgreSQL, MongoDB, Redis, MySQL, DynamoDB" isDarkMode={isDarkMode} />
         </BentoCard>
 
         <BentoCard id="stack-fe" className="md:col-span-12" isDarkMode={isDarkMode} delay={0.3}>
-          <HighlightedText category="Interactive Frontend" tech="React, TypeScript, Three.js, Framer Motion, Tailwind, Next.js" isDarkMode={isDarkMode} />
+          <HighlightedText category="Frontend" tech="React, TypeScript, Three.js, Framer Motion, Tailwind, Next.js" isDarkMode={isDarkMode} />
         </BentoCard>
       </div>
     </section>

@@ -40,10 +40,10 @@ const SPOTLIGHT_PROJECTS = [
 
 const OTHER_PROJECTS = [
   {
-    title: "Real-Time Fraud Intelligence",
-    desc: "A serverless pipeline for detecting fraudulent transactions in real-time using AWS streaming services.",
-    tech: "AWS Lambda, Neptune, Python",
-    github: "https://github.com/lightning4747/Serverless-Real-Time-Fraud-Intelligence",
+    title: "Search Engine",
+    desc: "A high-performance positional search engine featuring custom VByte compression, PageRank authority ranking, Damerau-Levenshtein spell checking, and live Elasticsearch benchmarking.",
+    tech: "TypeScript, React, Node.js, PostgreSQL, Elasticsearch",
+    github: "https://github.com/lightning4747/Search-Engine",
   },
   {
     title: "Restaurant Full-Stack",
@@ -58,16 +58,16 @@ const OTHER_PROJECTS = [
     github: "https://github.com/lightning4747/Luminary",
   },
   {
-    title: "Coffee Canvas",
-    desc: "A digital canvas for coffee enthusiasts to explore, create, and share their brewing artistry.",
-    tech: "NEXT.JS, TYPESCRIPT, PIXIJS, SOCKET.IO, NODE.JS, GO, GRPC, GRAPHQL, REDIS, POSTGRESQL, DOCKER",
-    github: "https://github.com/lightning4747/coffee-canvas",
+    title: "Live Canvas",
+    desc: "A digital interactive canvas for visual exploration, creative rendering, and real-time collaborative design.",
+    tech: "Next.js, TypeScript, PixiJS, Socket.io, Node.js",
+    github: "https://github.com/lightning4747/live-canvas",
   },
   {
-    title: "Snake Java Edition",
-    desc: "The classic arcade experience rebuilt with a focus on OOP principles and clean GUI implementation.",
-    tech: "Java, Swing",
-    github: "https://github.com/lightning4747/Snake-game-in-java",
+    title: "Linux Rice Setup",
+    desc: "A customized Unix desktop environment and ricing configuration optimized for workflow efficiency, minimalist aesthetics, and terminal productivity.",
+    tech: "Linux, Bash, Dotfiles, Shell",
+    github: "https://github.com/lightning4747/rice",
   },
   {
     title: "Arcana Vision",

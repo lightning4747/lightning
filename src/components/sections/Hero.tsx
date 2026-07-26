@@ -53,7 +53,7 @@ export const Hero = () => {
           {/* Tagline */}
           <FadeSection direction="down" delay={0.2}>
             <h2 className="font-mono text-accent-primary tracking-[0.4em] uppercase text-[10px] font-bold bg-accent-primary/5 px-4 py-1.5 rounded-full border border-accent-primary/20 backdrop-blur-sm shadow-sm mb-8">
-              Full Stack Software Engineer
+              Aspiring Full Stack Software Engineer
             </h2>
           </FadeSection>
           
@@ -74,18 +74,18 @@ export const Hero = () => {
           <div className="intro-block space-y-6 max-w-2xl">
             <h1 className="text-4xl md:text-5xl font-display font-medium tracking-tight">
               <span className={isDarkMode ? "text-slate-100" : "text-slate-900"}>
-                <Typewriter text="hi, " delay={1.2} />
+                <Typewriter text="Hi, gng" delay={1.2} />
                 <span className={isDarkMode ? "text-accent-primary" : "text-blue-600"}>
-                  <Typewriter text="vicky" delay={1.6} />
+                  {/* <Typewriter text="vicky" delay={1.6} /> */}
                 </span>
-                <Typewriter text=" here." delay={2.1} />
+                {/* <Typewriter text=" here." delay={2.1} /> */}
               </span>
             </h1>
 
             <FadeSection delay={1.4} direction="up" distance={20}>
               <p className={`text-lg md:text-xl font-sans leading-relaxed transition-colors duration-500 
                 ${isDarkMode ? "text-slate-400" : "text-slate-600"}`}>
-                I'm a <b>Full Stack Software Engineer</b> fascinated by high-performance systems and 
+                I'm an <b>Aspiring Full Stack Software Engineer</b> fascinated by high-performance systems and 
                 large-scale architectures. I specialize in building robust backend services and 
                 immersive digital experiences that merge engineering with art.
               </p>
