@@ -74,7 +74,7 @@ export const Hero = () => {
           <div className="intro-block space-y-6 max-w-2xl">
             <h1 className="text-4xl md:text-5xl font-display font-medium tracking-tight">
               <span className={isDarkMode ? "text-slate-100" : "text-slate-900"}>
-                <Typewriter text="Hi, gng" delay={1.2} />
+                <Typewriter text="Hello..." delay={1.2} />
                 <span className={isDarkMode ? "text-accent-primary" : "text-blue-600"}>
                   {/* <Typewriter text="vicky" delay={1.6} /> */}
                 </span>
